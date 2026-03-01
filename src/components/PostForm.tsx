@@ -21,6 +21,7 @@ import { submitFeedbackAction } from '@/lib/feedback-actions';
 import { Label } from '@/components/ui/label';
 import { Feedback } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 const formSchema = z.object({
   message: z.string().min(3, { message: "What's on your mind?" }),
@@ -94,18 +95,27 @@ export function PostForm() {
           <p className="text-muted-foreground text-base font-medium opacity-60">Transmission encrypted and stored securely.</p>
         </div>
 
-        {/* HIGH-FIDELITY WHISPER CARD - BIGGER & LOW RADIUS */}
+        {/* HIGH-FIDELITY WHISPER CARD */}
         <div className="flex flex-col items-center gap-10">
-          <div className="relative w-full max-w-[600px] min-h-[50vh] bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] hover:border-primary/30 transition-all duration-300 cursor-pointer rounded-xl overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,1)] flex flex-col group">
+          <div className={cn(
+            "relative w-full max-w-[600px] bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] hover:border-primary/30 transition-all duration-300 cursor-pointer rounded-xl overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,1)] flex flex-col group",
+            submittedData.imageUrl ? "min-h-[50vh]" : "min-h-[30vh]"
+          )}>
             
-            {/* 1. MESSAGE BLOCK - SEPARATED */}
-            <div className="p-10 bg-gradient-to-b from-primary/10 to-transparent">
-              <div className="space-y-6">
-                <div className="w-12 h-1 bg-primary/40 rounded-full" />
-                <p className="text-2xl md:text-3xl font-headline font-bold text-white leading-tight tracking-tight italic">
+            {/* 1. MESSAGE BLOCK */}
+            <div className={cn(
+              "p-10 bg-gradient-to-b from-primary/10 to-transparent flex flex-col",
+              !submittedData.imageUrl && "flex-1 justify-center items-center text-center"
+            )}>
+              <div className="space-y-6 w-full">
+                <div className={cn("w-12 h-1 bg-primary/40 rounded-full", !submittedData.imageUrl && "mx-auto")} />
+                <p className={cn(
+                  "font-headline font-bold text-white leading-tight tracking-tight italic",
+                  submittedData.imageUrl ? "text-2xl md:text-3xl" : "text-3xl md:text-4xl"
+                )}>
                   "{submittedData.message}"
                 </p>
-                <div className="flex items-center gap-2 pt-2">
+                <div className={cn("flex items-center gap-2 pt-2", !submittedData.imageUrl && "justify-center")}>
                    <Badge variant="outline" className="border-primary/20 bg-primary/10 text-[10px] font-bold text-primary/80 rounded-md px-3 py-1 uppercase tracking-widest">
                     {submittedData.isAnonymous ? 'ANON_SECURED' : submittedData.username?.toUpperCase()}
                   </Badge>
@@ -113,22 +123,24 @@ export function PostForm() {
               </div>
             </div>
 
-            {/* 2. MEDIA BLOCK - AUTO CROP 4:3 */}
-            <div className="px-8 pb-8 flex-1">
-              <div className="relative rounded-xl overflow-hidden aspect-[4/3] border border-white/[0.05] bg-black shadow-2xl h-full">
-                <img 
-                  src={submittedData.imageUrl || "https://picsum.photos/seed/lons-vault-big/1200/900"} 
-                  alt="Vault Asset" 
-                  className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-1000"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                
-                {/* Image Overlay Username - Bottom Right */}
-                <div className="absolute bottom-6 right-6">
-                  <div className="text-xs md:text-sm font-mono text-white/50 tracking-tighter font-bold drop-shadow-lg">@4ku_rajaa</div>
+            {/* 2. MEDIA BLOCK - Only show if image exists */}
+            {submittedData.imageUrl && (
+              <div className="px-8 pb-8 flex-1">
+                <div className="relative rounded-xl overflow-hidden aspect-[4/3] border border-white/[0.05] bg-black shadow-2xl h-full">
+                  <img 
+                    src={submittedData.imageUrl} 
+                    alt="Vault Asset" 
+                    className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-1000"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  
+                  {/* Image Overlay Username - Bottom Right */}
+                  <div className="absolute bottom-6 right-6">
+                    <div className="text-xs md:text-sm font-mono text-white/50 tracking-tighter font-bold drop-shadow-lg">@4ku_rajaa</div>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
 
           <div className="w-full max-w-[600px] space-y-6">
