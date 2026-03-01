@@ -3,11 +3,10 @@
 import { useState, useEffect } from 'react';
 import { Feedback } from '@/lib/types';
 import { getAllFeedbackAction } from '@/lib/feedback-actions';
-import { Ghost, Clock, ChevronRight, X, ArrowLeft, Twitter, ShieldCheck, Zap, Share2 } from 'lucide-react';
+import { Ghost, Clock, ChevronRight, ArrowLeft, Twitter } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 
 export function AdminFeedbackList() {
   const [feedback, setFeedback] = useState<Feedback[]>([]);
@@ -34,7 +33,7 @@ export function AdminFeedbackList() {
     return (
       <div className="space-y-4">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="h-28 bg-white/5 rounded-3xl animate-pulse" />
+          <div key={i} className="h-28 bg-white/5 rounded-2xl animate-pulse" />
         ))}
       </div>
     );
@@ -42,29 +41,29 @@ export function AdminFeedbackList() {
 
   if (selectedFeedback) {
     return (
-      <div className="animate-in fade-in slide-in-from-bottom-6 duration-500 max-w-2xl mx-auto pb-20">
+      <div className="animate-in fade-in slide-in-from-bottom-6 duration-500 max-w-4xl mx-auto pb-20 px-4">
         <Button 
           variant="ghost" 
           onClick={() => setSelectedFeedback(null)}
-          className="mb-10 text-muted-foreground hover:text-white transition-colors gap-2"
+          className="mb-8 text-muted-foreground hover:text-white transition-colors gap-2"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Admin Console
         </Button>
 
-        <div className="flex flex-col items-center">
-          {/* HIGH-FIDELITY VAULT CARD - CLEAN VERSION */}
-          <div className="relative w-full max-w-[340px] bg-[#0c0614] border border-primary/20 rounded-[2.5rem] overflow-hidden shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9)] flex flex-col group mb-8">
+        <div className="flex flex-col items-center gap-8">
+          {/* HIGH-FIDELITY WHISPER CARD - BIGGER & LOW RADIUS */}
+          <div className="relative w-full max-w-[600px] h-auto min-h-[50vh] bg-[#0f0a1a] border border-primary/20 rounded-2xl overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,1)] flex flex-col group">
             
-            {/* 1. MESSAGE BLOCK */}
-            <div className="p-7 pb-6 bg-gradient-to-b from-transparent to-primary/[0.05]">
-              <div className="space-y-4">
-                <div className="w-6 h-0.5 bg-primary/30 rounded-full" />
-                <p className="text-xl md:text-2xl font-headline font-bold text-white leading-tight tracking-tight italic">
+            {/* 1. MESSAGE BLOCK - SEPARATED */}
+            <div className="p-10 bg-gradient-to-b from-primary/10 to-transparent">
+              <div className="space-y-6">
+                <div className="w-12 h-1 bg-primary/40 rounded-full" />
+                <p className="text-2xl md:text-3xl font-headline font-bold text-white leading-tight tracking-tight italic">
                   "{selectedFeedback.message}"
                 </p>
                 <div className="flex items-center gap-2 pt-2">
-                   <Badge variant="outline" className="border-primary/10 bg-primary/5 text-[7px] font-bold text-primary/60 rounded-full px-2 py-0 h-4 uppercase tracking-widest">
+                   <Badge variant="outline" className="border-primary/20 bg-primary/10 text-[10px] font-bold text-primary/80 rounded-md px-3 py-1 uppercase tracking-widest">
                     {selectedFeedback.isAnonymous ? 'ANON_SECURED' : selectedFeedback.username?.toUpperCase()}
                   </Badge>
                 </div>
@@ -72,35 +71,35 @@ export function AdminFeedbackList() {
             </div>
 
             {/* 2. MEDIA BLOCK - AUTO CROP 4:3 */}
-            <div className="px-6 pb-6">
-              <div className="relative rounded-3xl overflow-hidden aspect-[4/3] border border-white/[0.05] bg-black shadow-2xl group-hover:border-primary/20 transition-colors">
+            <div className="px-8 pb-8 flex-1">
+              <div className="relative rounded-xl overflow-hidden aspect-[4/3] border border-white/[0.05] bg-black shadow-2xl transition-all h-full">
                 <img 
-                  src={selectedFeedback.imageUrl || "https://picsum.photos/seed/lons-admin/800/600"} 
+                  src={selectedFeedback.imageUrl || "https://picsum.photos/seed/lons-admin-big/1200/900"} 
                   alt="Vault Asset" 
-                  className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-1000"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 
-                {/* Image Overlay Username */}
-                <div className="absolute bottom-4 right-4">
-                  <div className="text-[8px] font-mono text-white/40 tracking-tighter font-bold">@4ku_rajaa</div>
+                {/* Image Overlay Username - Bottom Right */}
+                <div className="absolute bottom-6 right-6">
+                  <div className="text-xs md:text-sm font-mono text-white/50 tracking-tighter font-bold drop-shadow-lg">@4ku_rajaa</div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* EXTERNAL ACTION BUTTON */}
-          <div className="w-full max-w-[340px]">
+          <div className="w-full max-w-[600px] flex flex-col items-center gap-4">
             <Button 
               onClick={() => handleShareToX(selectedFeedback)}
-              className="w-full rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-14 text-base gap-3 transition-all active:scale-[0.97] shadow-xl"
+              className="w-full rounded-xl bg-white text-black hover:bg-white/90 font-bold h-16 text-lg gap-4 transition-all active:scale-[0.98] shadow-2xl"
             >
-              <Twitter className="h-5 w-5 fill-current" />
+              <Twitter className="h-6 w-6 fill-current" />
               Share to X
             </Button>
             
-            <p className="mt-8 text-center text-primary/20 text-[8px] font-mono font-bold uppercase tracking-[0.5em]">
-              Decrypted via Lons Protocol // Admin Session
+            <p className="mt-4 text-center text-primary/30 text-[10px] font-mono font-bold uppercase tracking-[0.6em]">
+              Lons Secure Protocol // Decrypted Session
             </p>
           </div>
         </div>
@@ -109,36 +108,36 @@ export function AdminFeedbackList() {
   }
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-6">
       {feedback.length > 0 ? (
         feedback.map((item, index) => (
           <div 
             key={item.id} 
             onClick={() => setSelectedFeedback(item)}
-            className="group relative flex items-center gap-6 p-6 rounded-[2.5rem] bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] hover:border-primary/30 transition-all duration-300 cursor-pointer"
+            className="group relative flex items-center gap-6 p-8 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] hover:border-primary/30 transition-all duration-300 cursor-pointer"
           >
-            <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-white/[0.03] flex items-center justify-center border border-white/[0.05] group-hover:scale-105 group-hover:bg-primary/5 transition-all">
-              <Ghost className="h-8 w-8 text-primary/40 group-hover:text-primary transition-colors" />
+            <div className="flex-shrink-0 w-20 h-20 rounded-xl bg-white/[0.03] flex items-center justify-center border border-white/[0.05] group-hover:scale-105 group-hover:bg-primary/5 transition-all">
+              <Ghost className="h-10 w-10 text-primary/40 group-hover:text-primary transition-colors" />
             </div>
 
-            <div className="flex-grow min-w-0 space-y-1">
-              <h3 className="text-lg font-bold text-white/80 group-hover:text-white transition-colors">
+            <div className="flex-grow min-w-0 space-y-2">
+              <h3 className="text-xl font-bold text-white/80 group-hover:text-white transition-colors">
                 Whisper #{feedback.length - index}
               </h3>
-              <p className="text-muted-foreground/40 text-sm font-medium line-clamp-1 italic group-hover:text-muted-foreground/60 transition-colors">
+              <p className="text-muted-foreground/40 text-base font-medium line-clamp-1 italic group-hover:text-muted-foreground/60 transition-colors">
                 "{item.message}"
               </p>
             </div>
 
-            <div className="flex items-center gap-8">
-              <div className="hidden sm:flex flex-col items-end gap-1.5">
-                <div className="flex items-center gap-2 text-muted-foreground/30 text-[9px] font-bold uppercase tracking-widest">
-                  <Clock className="h-2.5 w-2.5" />
+            <div className="flex items-center gap-10">
+              <div className="hidden sm:flex flex-col items-end gap-2">
+                <div className="flex items-center gap-2 text-muted-foreground/30 text-[10px] font-bold uppercase tracking-widest">
+                  <Clock className="h-3 w-3" />
                   {formatDistanceToNow(item.createdAt)}
                 </div>
                 {item.imageUrl && (
-                  <Badge variant="secondary" className="bg-primary/5 text-primary border-none rounded-full px-2 py-0 text-[8px] font-bold tracking-tighter">
-                    VISUAL
+                  <Badge variant="secondary" className="bg-primary/10 text-primary border-none rounded-md px-3 py-0.5 text-[9px] font-bold tracking-tighter">
+                    MEDIA_ATTACHED
                   </Badge>
                 )}
               </div>
@@ -146,19 +145,19 @@ export function AdminFeedbackList() {
               <Button 
                 variant="outline" 
                 size="icon" 
-                className="h-10 w-10 rounded-full border-white/10 bg-white/5 group-hover:bg-primary group-hover:border-primary group-hover:text-black transition-all duration-300"
+                className="h-12 w-12 rounded-full border-white/10 bg-white/5 group-hover:bg-primary group-hover:border-primary group-hover:text-black transition-all duration-300"
               >
-                <ChevronRight className="h-5 w-5" />
+                <ChevronRight className="h-6 w-6" />
               </Button>
             </div>
           </div>
         ))
       ) : (
-        <div className="text-center py-24 border border-dashed border-white/[0.05] rounded-[3rem] bg-white/[0.01]">
-          <div className="w-16 h-16 bg-white/[0.03] rounded-full flex items-center justify-center mx-auto mb-4">
-            <Ghost className="h-8 w-8 text-muted-foreground/10" />
+        <div className="text-center py-32 border border-dashed border-white/[0.05] rounded-2xl bg-white/[0.01]">
+          <div className="w-20 h-20 bg-white/[0.03] rounded-full flex items-center justify-center mx-auto mb-6">
+            <Ghost className="h-10 w-10 text-muted-foreground/10" />
           </div>
-          <p className="text-muted-foreground/20 font-bold uppercase tracking-widest text-[10px]">Vault session silent.</p>
+          <p className="text-muted-foreground/20 font-bold uppercase tracking-widest text-xs">The vault is currently silent.</p>
         </div>
       )}
     </div>
