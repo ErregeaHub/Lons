@@ -96,7 +96,7 @@ export function PostForm() {
 
         {/* HIGH-FIDELITY WHISPER CARD - BIGGER & LOW RADIUS */}
         <div className="flex flex-col items-center gap-10">
-          <div className="relative w-full max-w-[550px] min-h-[50vh] bg-[#0f0a1a] border border-primary/20 rounded-2xl overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,1)] flex flex-col group">
+          <div className="relative w-full max-w-[600px] min-h-[50vh] bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] hover:border-primary/30 transition-all duration-300 cursor-pointer rounded-xl overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,1)] flex flex-col group">
             
             {/* 1. MESSAGE BLOCK - SEPARATED */}
             <div className="p-10 bg-gradient-to-b from-primary/10 to-transparent">
@@ -131,7 +131,7 @@ export function PostForm() {
             </div>
           </div>
 
-          <div className="w-full max-w-[550px] space-y-6">
+          <div className="w-full max-w-[600px] space-y-6">
             <Button 
               onClick={handleShareToX}
               className="w-full rounded-xl bg-white text-black hover:bg-white/90 font-bold h-16 text-lg gap-4 transition-all active:scale-[0.98] shadow-2xl"
