@@ -85,51 +85,51 @@ export function PostForm() {
   if (submittedData) {
     return (
       <Card className="glass-card rounded-[2.5rem] overflow-hidden border-white/10 bg-[#1e1a22] animate-in fade-in zoom-in duration-500 shadow-2xl">
-        <CardContent className="p-10 text-center space-y-8">
-          <div className="flex flex-col items-center gap-4">
-            <div className="w-16 h-16 bg-[#E1BDFF]/20 rounded-full flex items-center justify-center border border-[#E1BDFF]/30 shadow-inner">
-              <CheckCircle2 className="h-8 w-8 text-[#E1BDFF]" />
+        <CardContent className="p-8 text-center space-y-8">
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-14 h-14 bg-[#E1BDFF]/20 rounded-full flex items-center justify-center border border-[#E1BDFF]/30 shadow-inner">
+              <CheckCircle2 className="h-7 w-7 text-[#E1BDFF]" />
             </div>
-            <div className="space-y-1">
-              <h2 className="text-2xl font-headline font-bold text-white tracking-tight">Whisper Vaulted</h2>
-              <p className="text-muted-foreground text-sm font-medium max-w-sm mx-auto">
+            <div className="space-y-0.5">
+              <h2 className="text-xl font-headline font-bold text-white tracking-tight">Whisper Vaulted</h2>
+              <p className="text-muted-foreground text-[11px] font-medium max-w-xs mx-auto">
                 Ready to be shared with the world.
               </p>
             </div>
           </div>
 
-          {/* Compact High-Fidelity Mockup */}
-          <div className="relative group rounded-[2rem] overflow-hidden border border-white/10 bg-black shadow-2xl mx-auto max-w-[340px] flex flex-col">
+          {/* Compact Screenshot-Friendly Mockup */}
+          <div className="relative group rounded-[1.5rem] overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-2xl mx-auto max-w-[320px] flex flex-col">
              {/* Header Branding */}
-             <div className="px-5 py-3 flex items-center justify-between border-b border-white/5 bg-white/[0.02]">
+             <div className="px-4 py-2.5 flex items-center justify-between border-b border-white/5 bg-white/[0.02]">
                 <div className="flex items-center gap-2">
-                  <Ghost className="h-3 w-3 text-[#E1BDFF]" />
-                  <span className="text-[8px] font-bold text-white/60 uppercase tracking-widest">Lons Vault</span>
+                  <Ghost className="h-2.5 w-2.5 text-[#E1BDFF]" />
+                  <span className="text-[7px] font-bold text-white/50 uppercase tracking-[0.3em]">Lons Vault</span>
                 </div>
-                <div className="w-1.5 h-1.5 rounded-full bg-[#E1BDFF] animate-pulse" />
+                <div className="w-1 h-1 rounded-full bg-[#E1BDFF]/60 animate-pulse" />
              </div>
 
-            {/* Message Area (Top) */}
-            <div className="p-6 bg-gradient-to-b from-white/[0.03] to-transparent text-left">
-              <p className="text-lg font-headline font-bold text-white leading-snug italic">
+            {/* Message Area (Top - Separated) */}
+            <div className="p-5 bg-[#141414] border-b border-white/5 text-left">
+              <p className="text-base font-headline font-bold text-white leading-tight italic">
                 "{submittedData.message}"
               </p>
             </div>
             
-            {/* Image Area (Bottom) - Controlled Height */}
-            <div className="w-full bg-muted/10 overflow-hidden h-[300px]">
+            {/* Image Area (Bottom - Controlled Height) */}
+            <div className="w-full bg-black overflow-hidden h-[240px]">
               <img 
                 src={submittedData.imageUrl || "https://picsum.photos/seed/lons-nature/800/1000"} 
                 alt="Mockup Preview" 
-                className="w-full h-full object-cover opacity-90 transition-opacity duration-700"
+                className="w-full h-full object-cover opacity-80"
               />
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 pt-2">
+          <div className="flex flex-col sm:flex-row gap-3 pt-2">
             <Button 
               onClick={handleShareToX}
-              className="flex-1 rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-14 text-base gap-3 shadow-xl transition-all active:scale-[0.98]"
+              className="flex-1 rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-12 text-sm gap-3 shadow-xl transition-all active:scale-[0.98]"
             >
               <Twitter className="h-4 w-4 fill-current" />
               Share to X
@@ -137,7 +137,7 @@ export function PostForm() {
             <Button 
               variant="outline"
               onClick={resetForm}
-              className="rounded-2xl border-white/10 bg-white/5 hover:bg-white/10 text-white font-bold h-14 px-8 transition-all"
+              className="rounded-2xl border-white/10 bg-white/5 hover:bg-white/10 text-white font-bold h-12 px-6 text-sm transition-all"
             >
               <RotateCcw className="h-4 w-4 mr-2" />
               Reset
