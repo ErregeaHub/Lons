@@ -1,10 +1,9 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
 import { Feedback } from '@/lib/types';
 import { getAllFeedbackAction } from '@/lib/feedback-actions';
-import { Ghost, Clock, ChevronRight, X, ArrowLeft, Share2 } from 'lucide-react';
+import { Ghost, Clock, ChevronRight, X, ArrowLeft } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -53,7 +52,7 @@ export function AdminFeedbackList() {
 
         <Card className="glass-card rounded-[2.5rem] overflow-hidden border-primary/20 bg-primary/5 shadow-2xl shadow-primary/10">
           <CardContent className="p-0">
-            {/* Mockup Header */}
+            {/* Header */}
             <div className="p-8 pb-4 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center border border-primary/30 shadow-lg shadow-primary/20">
@@ -79,24 +78,26 @@ export function AdminFeedbackList() {
               </Button>
             </div>
 
-            {/* Mockup Content Area */}
+            {/* High-Fidelity Mockup Area */}
             <div className="px-8 pb-8 space-y-6">
               <div className="relative group rounded-[2rem] overflow-hidden border border-white/10 bg-black/40 shadow-inner">
                 {/* Image Mockup */}
-                <div className="aspect-[4/3] w-full bg-muted/20 relative overflow-hidden">
+                <div className="aspect-[4/5] w-full bg-muted/20 relative overflow-hidden">
                   <img 
-                    src={selectedFeedback.imageUrl || "https://picsum.photos/seed/lons/800/600"} 
+                    src={selectedFeedback.imageUrl || "https://picsum.photos/seed/lons/800/1000"} 
                     alt="Mockup Visual" 
                     className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
-                    data-ai-hint="abstract dark"
+                    data-ai-hint="atmospheric landscape"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   
-                  {/* Message Overlay Style */}
-                  <div className="absolute bottom-0 left-0 right-0 p-8">
-                    <p className="text-2xl font-headline font-medium text-white leading-tight italic drop-shadow-lg">
-                      "{selectedFeedback.message}"
-                    </p>
+                  {/* Message Overlay Style - Snapchat inspired */}
+                  <div className="absolute inset-x-0 bottom-12 flex justify-center px-6">
+                    <div className="bg-black/60 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/10 shadow-2xl max-w-full text-center">
+                      <p className="text-xl md:text-2xl font-headline font-medium text-white leading-tight italic drop-shadow-md">
+                        "{selectedFeedback.message}"
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
