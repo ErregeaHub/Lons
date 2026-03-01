@@ -84,9 +84,9 @@ export function AdminFeedbackList() {
             <div className="px-8 pb-8 space-y-8">
               <div className="relative group rounded-[2.5rem] overflow-hidden border border-white/10 bg-black/60 shadow-2xl transition-transform hover:scale-[1.01] duration-500">
                 {/* Image Mockup */}
-                <div className="aspect-[4/5] w-full bg-muted/10 relative overflow-hidden">
+                <div className="aspect-[4/5] w-full bg-muted/10 relative overflow-hidden flex items-center justify-center">
                   <img 
-                    src={selectedFeedback.imageUrl || "https://picsum.photos/seed/lons/800/1000"} 
+                    src={selectedFeedback.imageUrl || "https://picsum.photos/seed/lons-abstract/800/1000"} 
                     alt="Mockup Visual" 
                     className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-700"
                     data-ai-hint="atmospheric landscape"
@@ -94,10 +94,10 @@ export function AdminFeedbackList() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
                   
                   {/* Message Overlay Style - Snapchat inspired */}
-                  <div className="absolute inset-x-0 bottom-16 flex justify-center px-4">
-                    <div className="w-full bg-black/60 backdrop-blur-xl py-5 px-6 border-y border-white/10 shadow-2xl text-center">
-                      <p className="text-xl md:text-2xl font-headline font-medium text-white leading-snug drop-shadow-lg">
-                        {selectedFeedback.message}
+                  <div className="absolute inset-x-0 bottom-16 flex justify-center">
+                    <div className="w-full bg-black/60 backdrop-blur-xl py-6 px-8 border-y border-white/10 shadow-2xl text-center">
+                      <p className="text-xl md:text-2xl font-headline font-bold text-white leading-snug drop-shadow-lg italic">
+                        "{selectedFeedback.message}"
                       </p>
                     </div>
                   </div>

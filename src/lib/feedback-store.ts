@@ -1,4 +1,3 @@
-
 import { Feedback } from './types';
 
 let feedbackItems: Feedback[] = [
@@ -6,13 +5,14 @@ let feedbackItems: Feedback[] = [
     id: '1',
     message: 'Sometimes the silence is louder than the noise.',
     isAnonymous: true,
-    imageUrl: 'https://picsum.photos/seed/silent/800/600',
+    imageUrl: 'https://picsum.photos/seed/silent/800/1000',
     createdAt: new Date(Date.now() - 1000 * 60 * 12),
   },
   {
     id: '2',
-    message: "Is there any way to report a user? Just checking.",
+    message: "The darkest nights produce the brightest stars.",
     isAnonymous: true,
+    imageUrl: 'https://picsum.photos/seed/stars/800/1000',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2),
   },
   {
@@ -20,6 +20,7 @@ let feedbackItems: Feedback[] = [
     message: "Can I delete my anonymous posts later? I am curious.",
     isAnonymous: false,
     username: 'GhostWriter',
+    imageUrl: 'https://picsum.photos/seed/ghost/800/1000',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24),
   }
 ];

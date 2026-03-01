@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Image, SendHorizontal, X, CheckCircle2, RotateCcw, Twitter } from 'lucide-react';
+import { Image, SendHorizontal, X, CheckCircle2, RotateCcw, Twitter, Ghost } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -93,30 +93,35 @@ export function PostForm() {
             <div className="space-y-2">
               <h2 className="text-3xl font-headline font-bold text-white tracking-tight">Whisper Vaulted</h2>
               <p className="text-muted-foreground font-medium max-w-sm mx-auto">
-                Your message is safe. Silence is the ultimate expression.
+                Your expression is safe. You can now share this visual directly to X.
               </p>
             </div>
           </div>
 
-          <div className="bg-black/40 border border-white/5 rounded-[2rem] p-8 text-left space-y-6 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-              <Twitter className="h-12 w-12" />
-            </div>
-            <p className="text-xl md:text-2xl font-headline font-medium text-white/90 leading-relaxed italic">
-              "{submittedData.message}"
-            </p>
-            {submittedData.imageUrl && (
-              <div className="rounded-2xl overflow-hidden border border-white/10 shadow-lg max-h-60">
-                <img src={submittedData.imageUrl} alt="Attached Visual" className="w-full h-full object-cover" />
+          {/* High-Fidelity Mockup (Snapchat Style) */}
+          <div className="relative group rounded-[2.5rem] overflow-hidden border border-white/10 bg-black/60 shadow-2xl transition-transform hover:scale-[1.01] duration-500 mx-auto max-w-md">
+            <div className="aspect-[4/5] w-full bg-muted/10 relative overflow-hidden flex items-center justify-center">
+              <img 
+                src={submittedData.imageUrl || "https://picsum.photos/seed/lons-abstract/800/1000"} 
+                alt="Mockup Preview" 
+                className="w-full h-full object-cover opacity-90 transition-opacity duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
+              
+              {/* Message Overlay Style - Snapchat inspired */}
+              <div className="absolute inset-x-0 bottom-12 flex justify-center">
+                <div className="w-full bg-black/60 backdrop-blur-xl py-5 px-6 border-y border-white/10 shadow-2xl text-center">
+                  <p className="text-lg md:text-xl font-headline font-bold text-white leading-snug drop-shadow-lg italic">
+                    "{submittedData.message}"
+                  </p>
+                </div>
               </div>
-            )}
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
-                <CheckCircle2 className="h-4 w-4 text-primary" />
+
+              {/* Branding Overlay */}
+              <div className="absolute top-6 left-6 flex items-center gap-2 px-3 py-1.5 bg-black/40 backdrop-blur-md rounded-full border border-white/10">
+                <Ghost className="h-3 w-3 text-primary" />
+                <span className="text-[10px] font-bold text-white/80 uppercase tracking-widest">Lons</span>
               </div>
-              <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
-                {submittedData.isAnonymous ? 'Verified Anonymous Expression' : `Authored by ${submittedData.username}`}
-              </span>
             </div>
           </div>
 
