@@ -193,19 +193,19 @@ export function PostForm() {
                   variant="ghost" 
                   size="icon" 
                   type="button" 
-                  className="h-20 w-20 rounded-xl text-muted-foreground/30 hover:text-primary hover:bg-primary/5 transition-all active:scale-90"
+                  className="h-14 w-14 rounded-xl text-muted-foreground/30 hover:text-primary hover:bg-primary/5 transition-all active:scale-90"
                 >
-                  <ImageIcon className="h-10 w-10" />
+                  <ImageIcon className="h-6 w-6" />
                 </Button>
               </div>
 
               <Button 
                 type="submit" 
-                className="rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 px-12 py-10 font-bold flex items-center gap-6 transition-all hover:translate-x-1 shadow-2xl shadow-primary/10 active:scale-[0.98]"
+                className="rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 px-8 h-14 font-bold flex items-center gap-4 transition-all hover:translate-x-1 shadow-xl shadow-primary/10 active:scale-[0.98]"
                 disabled={isSubmitting}
               >
-                <span className="text-2xl">{isSubmitting ? 'Vaulting...' : 'Whisper'}</span>
-                <SendHorizontal className="h-8 w-8" />
+                <span className="text-lg">{isSubmitting ? 'Vaulting...' : 'Whisper'}</span>
+                <SendHorizontal className="h-5 w-5" />
               </Button>
             </div>
           </form>
