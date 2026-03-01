@@ -6,5 +6,4 @@ export interface Feedback {
   isAnonymous: boolean;
   username?: string;
   createdAt: Date;
-  messageCount?: number;
 }

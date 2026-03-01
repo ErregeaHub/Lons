@@ -19,7 +19,6 @@ export async function submitFeedbackAction(formData: {
     username: formData.username,
     imageUrl: formData.imageUrl,
     createdAt: new Date(),
-    messageCount: 0
   };
 
   await addFeedbackItem(newFeedback);

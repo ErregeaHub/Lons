@@ -6,22 +6,19 @@ let feedbackItems: Feedback[] = [
     id: '1',
     message: 'Is there any way to report a user?',
     isAnonymous: true,
-    createdAt: new Date(Date.now() - 1000 * 60 * 5), // 5 mins ago
-    messageCount: 3,
+    createdAt: new Date(Date.now() - 1000 * 60 * 5),
   },
   {
     id: '2',
     message: "Thanks for the quick response!",
     isAnonymous: true,
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 3), // 3 hours ago
-    messageCount: 2,
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 3),
   },
   {
     id: '3',
     message: "Can I delete my anonymous posts later?",
     isAnonymous: true,
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 day ago
-    messageCount: 0,
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24),
   }
 ];
 
