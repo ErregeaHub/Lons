@@ -4,53 +4,26 @@
 
 @layer base {
   :root {
-    --background: 252 7% 14%;
+    --background: 280 12% 17%;
     --foreground: 0 0% 98%;
-    --card: 252 10% 16%;
+    --card: 280 12% 20%;
     --card-foreground: 0 0% 98%;
-    --popover: 252 10% 16%;
+    --popover: 280 12% 20%;
     --popover-foreground: 0 0% 98%;
-    --primary: 252 38% 53%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 228 94% 67%;
-    --secondary-foreground: 228 94% 10%;
-    --muted: 252 10% 22%;
-    --muted-foreground: 252 5% 70%;
-    --accent: 228 94% 67%;
-    --accent-foreground: 228 94% 10%;
+    --primary: 272 100% 87%;
+    --primary-foreground: 280 12% 10%;
+    --secondary: 252 70% 52%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 280 10% 25%;
+    --muted-foreground: 280 5% 70%;
+    --accent: 252 70% 52%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 252 10% 22%;
-    --input: 252 10% 22%;
-    --ring: 252 38% 53%;
-    --radius: 0.75rem;
-    --chart-1: 252 38% 53%;
-    --chart-2: 228 94% 67%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-  }
-
-  .dark {
-    --background: 252 7% 10%;
-    --foreground: 0 0% 98%;
-    --card: 252 10% 12%;
-    --card-foreground: 0 0% 98%;
-    --popover: 252 10% 12%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 252 38% 53%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 228 94% 67%;
-    --secondary-foreground: 228 94% 10%;
-    --muted: 252 10% 18%;
-    --muted-foreground: 252 5% 70%;
-    --accent: 228 94% 67%;
-    --accent-foreground: 228 94% 10%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 252 10% 18%;
-    --input: 252 10% 18%;
-    --ring: 252 38% 53%;
+    --border: 280 10% 28%;
+    --input: 280 10% 28%;
+    --ring: 272 100% 87%;
+    --radius: 1rem;
   }
 }
 
@@ -59,6 +32,13 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-body;
+    @apply bg-background text-foreground font-body antialiased;
   }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-headline tracking-tight;
+  }
+}
+
+.glass-card {
+  @apply bg-card/50 backdrop-blur-md border border-white/5;
 }
