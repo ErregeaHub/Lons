@@ -94,20 +94,11 @@ export function PostForm() {
           <p className="text-muted-foreground text-sm font-medium opacity-60">Your transmission has been encrypted and stored.</p>
         </div>
 
-        {/* HIGH-FIDELITY VAULT CARD - DARK PURPLE THEME */}
+        {/* HIGH-FIDELITY VAULT CARD - CLEAN VERSION */}
         <div className="flex flex-col items-center">
-          <div className="relative w-full max-w-[340px] bg-[#0c0614] border border-primary/20 rounded-[2.5rem] overflow-hidden shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9)] flex flex-col group">
+          <div className="relative w-full max-w-[340px] bg-[#0c0614] border border-primary/20 rounded-[2.5rem] overflow-hidden shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9)] flex flex-col group mb-8">
             
-            {/* 1. HEADER METADATA */}
-            <div className="px-6 py-4 flex items-center justify-between border-b border-white/[0.03] bg-primary/[0.02]">
-              <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                <span className="text-[8px] font-mono font-bold text-primary/40 uppercase tracking-[0.3em]">TRNS_ID: {submittedData.id.toUpperCase()}</span>
-              </div>
-              <Ghost className="h-3 w-3 text-primary/20" />
-            </div>
-
-            {/* 2. MESSAGE BLOCK */}
+            {/* 1. MESSAGE BLOCK */}
             <div className="p-7 pb-6 bg-gradient-to-b from-transparent to-primary/[0.05]">
               <div className="space-y-4">
                 <div className="w-6 h-0.5 bg-primary/30 rounded-full" />
@@ -122,7 +113,7 @@ export function PostForm() {
               </div>
             </div>
 
-            {/* 3. MEDIA BLOCK - AUTO CROP 4:3 */}
+            {/* 2. MEDIA BLOCK - AUTO CROP 4:3 */}
             <div className="px-6 pb-6">
               <div className="relative rounded-3xl overflow-hidden aspect-[4/3] border border-white/[0.05] bg-black shadow-2xl group-hover:border-primary/20 transition-colors">
                 <img 
@@ -132,40 +123,27 @@ export function PostForm() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                 
-                {/* Image Overlay Metadata */}
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/10">
-                    <ShieldCheck className="h-3 w-3 text-primary" />
-                    <span className="text-[7px] font-bold text-white/60 uppercase tracking-widest">Asset_Encrypted</span>
-                  </div>
+                {/* Image Overlay Username */}
+                <div className="absolute bottom-4 right-4">
                   <div className="text-[8px] font-mono text-white/40 tracking-tighter font-bold">@4ku_rajaa</div>
                 </div>
               </div>
             </div>
-
-            {/* 4. FOOTER ACTIONS */}
-            <div className="p-6 pt-2 bg-primary/[0.02] border-t border-white/[0.03] mt-auto">
-              <Button 
-                onClick={handleShareToX}
-                className="w-full rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-12 text-sm gap-3 transition-all active:scale-[0.97] shadow-[0_10px_30px_-5px_rgba(255,255,255,0.1)]"
-              >
-                <Twitter className="h-4 w-4 fill-current" />
-                Share to X
-              </Button>
-              
-              <div className="mt-4 flex items-center justify-center gap-3 opacity-10">
-                <div className="h-px flex-1 bg-white" />
-                <Zap className="h-3 w-3 text-white" />
-                <div className="h-px flex-1 bg-white" />
-              </div>
-            </div>
           </div>
 
-          <div className="mt-8 flex gap-4">
+          <div className="w-full max-w-[340px] space-y-4">
+            <Button 
+              onClick={handleShareToX}
+              className="w-full rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-14 text-base gap-3 transition-all active:scale-[0.97] shadow-xl"
+            >
+              <Twitter className="h-5 w-5 fill-current" />
+              Share to X
+            </Button>
+
             <Button 
               variant="ghost"
               onClick={resetForm}
-              className="rounded-2xl text-muted-foreground/60 hover:text-white transition-all gap-2"
+              className="w-full rounded-2xl text-muted-foreground/60 hover:text-white transition-all gap-2"
             >
               <RotateCcw className="h-4 w-4" />
               Reset & Send Another
