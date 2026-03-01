@@ -3,9 +3,9 @@ import { PostForm } from '@/components/PostForm';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
       <LonsNavbar />
-      
+
       <main className="container mx-auto px-4 py-12 max-w-4xl">
         <header className="text-center space-y-4 mb-16">
           <h1 className="text-5xl md:text-6xl font-headline font-bold text-white tracking-tight">

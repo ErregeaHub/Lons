@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { Feedback } from '@/lib/types';
-import { getAllFeedbackAction } from '@/lib/feedback-actions';
-import { Ghost, Clock, ChevronRight, ArrowLeft, Twitter } from 'lucide-react';
+import { Ghost, Clock, ChevronRight, ArrowLeft, Twitter, Trash2 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { getAllFeedbackAction, deleteFeedbackAction } from '@/lib/feedback-actions';
 
 export function AdminFeedbackList() {
   const [feedback, setFeedback] = useState<Feedback[]>([]);
@@ -21,6 +21,14 @@ export function AdminFeedbackList() {
       setLoading(false);
     }
     load();
+
+    // Poll every 3 seconds for new whispers
+    const interval = setInterval(async () => {
+      const data = await getAllFeedbackAction();
+      setFeedback(data);
+    }, 3000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const handleShareToX = (item: Feedback) => {
@@ -28,6 +36,20 @@ export function AdminFeedbackList() {
     const shareUrl = item.imageUrl || window.location.origin;
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}&url=${encodeURIComponent(shareUrl)}`;
     window.open(twitterUrl, '_blank');
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!window.confirm('Are you sure you want to permanently delete this whisper?')) return;
+
+    const result = await deleteFeedbackAction(id);
+    if (result.success) {
+      setFeedback(prev => prev.filter(item => item.id !== id));
+      if (selectedFeedback?.id === id) {
+        setSelectedFeedback(null);
+      }
+    } else {
+      alert('Failed to delete whisper: ' + (result.error || 'Unknown error'));
+    }
   };
 
   if (loading) {
@@ -43,8 +65,8 @@ export function AdminFeedbackList() {
   if (selectedFeedback) {
     return (
       <div className="animate-in fade-in slide-in-from-bottom-6 duration-500 max-w-4xl mx-auto pb-20 px-4">
-        <Button 
-          variant="ghost" 
+        <Button
+          variant="ghost"
           onClick={() => setSelectedFeedback(null)}
           className="mb-8 text-muted-foreground hover:text-white transition-colors gap-2"
         >
@@ -58,7 +80,7 @@ export function AdminFeedbackList() {
             "relative w-full max-w-[600px] bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] hover:border-primary/30 transition-all duration-300 cursor-pointer rounded-xl overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,1)] flex flex-col group",
             selectedFeedback.imageUrl ? "min-h-[50vh]" : "min-h-[30vh]"
           )}>
-            
+
             {/* 1. MESSAGE BLOCK */}
             <div className={cn(
               "p-10 bg-gradient-to-b from-primary/10 to-transparent flex flex-col",
@@ -73,7 +95,7 @@ export function AdminFeedbackList() {
                   "{selectedFeedback.message}"
                 </p>
                 <div className={cn("flex items-center gap-2 pt-2", !selectedFeedback.imageUrl && "justify-center")}>
-                   <Badge variant="outline" className="border-primary/20 bg-primary/10 text-[10px] font-bold text-primary/80 rounded-md px-3 py-1 uppercase tracking-widest">
+                  <Badge variant="outline" className="border-primary/20 bg-primary/10 text-[10px] font-bold text-primary/80 rounded-md px-3 py-1 uppercase tracking-widest">
                     {selectedFeedback.isAnonymous ? 'ANONYMOUS' : selectedFeedback.username?.toUpperCase()}
                   </Badge>
                 </div>
@@ -84,32 +106,43 @@ export function AdminFeedbackList() {
             {selectedFeedback.imageUrl && (
               <div className="px-8 pb-8 flex-1">
                 <div className="relative rounded-xl overflow-hidden aspect-[4/3] border border-white/[0.05] bg-black shadow-2xl transition-all h-full">
-                  <img 
-                    src={selectedFeedback.imageUrl} 
-                    alt="Vault Asset" 
+                  <img
+                    src={selectedFeedback.imageUrl}
+                    alt="Vault Asset"
                     className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-1000"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  
+
                   {/* Image Overlay Username - Bottom Right */}
                   <div className="absolute bottom-6 right-6">
-                    <div className="text-xs md:text-sm font-mono text-white/50 tracking-tighter font-bold drop-shadow-lg">@4ku_rajaa</div>
+                    <div className="text-xs md:text-sm font-mono text-white/50 tracking-tighter font-bold drop-shadow-lg">
+                      @{selectedFeedback.isAnonymous ? 'anonymous' : (selectedFeedback.username || 'anonymous')}
+                    </div>
                   </div>
                 </div>
               </div>
             )}
           </div>
 
-          {/* EXTERNAL ACTION BUTTON */}
+          {/* EXTERNAL ACTION BUTTONS */}
           <div className="w-full max-w-[600px] flex flex-col items-center gap-4">
-            <Button 
+            <Button
               onClick={() => handleShareToX(selectedFeedback)}
               className="w-full rounded-xl bg-white text-black hover:bg-white/90 font-bold h-16 text-lg gap-4 transition-all active:scale-[0.98] shadow-2xl"
             >
               <Twitter className="h-6 w-6 fill-current" />
               Share to X
             </Button>
-            
+
+            <Button
+              variant="ghost"
+              onClick={() => handleDelete(selectedFeedback.id)}
+              className="w-full rounded-xl text-destructive hover:text-destructive hover:bg-destructive/10 font-bold h-12 text-sm gap-2 transition-all"
+            >
+              <Trash2 className="h-4 w-4" />
+              Delete Permanently
+            </Button>
+
             <p className="mt-4 text-center text-primary/30 text-[10px] font-mono font-bold uppercase tracking-[0.6em]">
               Lons Secure Protocol // Decrypted Session
             </p>
@@ -123,8 +156,8 @@ export function AdminFeedbackList() {
     <div className="grid gap-6">
       {feedback.length > 0 ? (
         feedback.map((item, index) => (
-          <div 
-            key={item.id} 
+          <div
+            key={item.id}
             onClick={() => setSelectedFeedback(item)}
             className="group relative flex items-center gap-6 p-8 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] hover:border-primary/30 transition-all duration-300 cursor-pointer"
           >
@@ -133,11 +166,16 @@ export function AdminFeedbackList() {
             </div>
 
             <div className="flex-grow min-w-0 space-y-2">
-              <h3 className="text-xl font-bold text-white/80 group-hover:text-white transition-colors">
-                Whisper #{feedback.length - index}
-              </h3>
-              <p className="text-muted-foreground/40 text-base font-medium line-clamp-1 italic group-hover:text-muted-foreground/60 transition-colors">
-                "{item.message}"
+              <div className="flex items-center gap-3">
+                <h3 className="text-lg font-bold text-white/80 group-hover:text-white transition-colors">
+                  Whisper #{feedback.length - index}
+                </h3>
+                <Badge variant="outline" className="border-primary/20 bg-primary/10 text-[9px] font-bold text-primary/80 rounded-md px-2 py-0.5 uppercase tracking-widest">
+                  {item.isAnonymous ? 'ANONYMOUS' : (item.username || 'UNKNOWN')}
+                </Badge>
+              </div>
+              <p className="text-muted-foreground/70 text-base font-medium line-clamp-2 italic group-hover:text-muted-foreground/90 transition-colors leading-relaxed">
+                &ldquo;{item.message}&rdquo;
               </p>
             </div>
 
@@ -154,12 +192,24 @@ export function AdminFeedbackList() {
                 )}
               </div>
 
-              <Button 
-                variant="outline" 
-                size="icon" 
+              <Button
+                variant="outline"
+                size="icon"
                 className="h-12 w-12 rounded-full border-white/10 bg-white/5 group-hover:bg-primary group-hover:border-primary group-hover:text-black transition-all duration-300"
               >
                 <ChevronRight className="h-6 w-6" />
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDelete(item.id);
+                }}
+                className="h-12 w-12 rounded-full text-muted-foreground/20 hover:text-destructive hover:bg-destructive/10 transition-all duration-300"
+              >
+                <Trash2 className="h-5 w-5" />
               </Button>
             </div>
           </div>

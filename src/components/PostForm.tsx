@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Image as ImageIcon, SendHorizontal, X, CheckCircle2, RotateCcw } from 'lucide-react';
+import { Image as ImageIcon, SendHorizontal, X, CheckCircle2, RotateCcw, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -19,8 +19,8 @@ import { Switch } from '@/components/ui/switch';
 import { Card, CardContent } from '@/components/ui/card';
 import { submitFeedbackAction } from '@/lib/feedback-actions';
 import { Label } from '@/components/ui/label';
-import { Feedback } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import { uploadImage } from '@/lib/supabase';
 
 const formSchema = z.object({
   message: z.string().min(3, { message: "What's on your mind?" }),
@@ -32,6 +32,7 @@ const formSchema = z.object({
 export function PostForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -60,12 +61,21 @@ export function PostForm() {
     }
   }
 
-  const handleImageSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageSelection = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const url = URL.createObjectURL(file);
-      setImagePreview(url);
-      form.setValue('imageUrl', url);
+      setIsUploading(true);
+      try {
+        const publicUrl = await uploadImage(file);
+        if (publicUrl) {
+          setImagePreview(publicUrl);
+          form.setValue('imageUrl', publicUrl);
+        }
+      } catch (error) {
+        console.error('Image upload failed', error);
+      } finally {
+        setIsUploading(false);
+      }
     }
   };
 
@@ -86,9 +96,9 @@ export function PostForm() {
             <h2 className="text-4xl md:text-5xl font-headline font-bold text-white tracking-tight">Whisper Vaulted</h2>
             <p className="text-muted-foreground text-lg font-medium opacity-60">Transmission encrypted and stored securely.</p>
           </div>
-          
+
           <div className="pt-12">
-            <Button 
+            <Button
               variant="outline"
               onClick={resetForm}
               className="rounded-full border-white/10 text-muted-foreground hover:text-white transition-all gap-2 h-10 px-6 hover:bg-white/5 font-bold"
@@ -133,10 +143,10 @@ export function PostForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Textarea 
-                        placeholder="What's hidden in the vault?" 
+                      <Textarea
+                        placeholder="What's hidden in the vault?"
                         className="min-h-[250px] bg-black/20 border-white/[0.05] rounded-2xl text-2xl focus-visible:ring-primary/10 placeholder:text-muted-foreground/10 resize-none p-10 font-medium leading-relaxed transition-all focus:bg-black/30"
-                        {...field} 
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
@@ -150,10 +160,10 @@ export function PostForm() {
                   name="username"
                   render={({ field }) => (
                     <FormItem className="animate-in fade-in slide-in-from-top-2 duration-300">
-                      <Input 
-                        placeholder="Identity Alias" 
-                        className="bg-black/10 border-white/[0.05] rounded-xl h-16 text-xl px-8 focus-visible:ring-primary/10" 
-                        {...field} 
+                      <Input
+                        placeholder="Identity Alias"
+                        className="bg-black/10 border-white/[0.05] rounded-xl h-16 text-xl px-8 focus-visible:ring-primary/10"
+                        {...field}
                       />
                     </FormItem>
                   )}
@@ -163,14 +173,14 @@ export function PostForm() {
               {imagePreview && (
                 <div className="relative inline-block group animate-in zoom-in duration-300">
                   <div className="relative rounded-xl overflow-hidden border border-white/10 shadow-2xl">
-                    <img 
-                      src={imagePreview} 
-                      alt="Preview" 
-                      className="max-h-80 w-auto object-cover" 
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      className="max-h-80 w-auto object-cover"
                     />
                     <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
                   </div>
-                  <button 
+                  <button
                     type="button"
                     onClick={() => { setImagePreview(null); form.setValue('imageUrl', ''); }}
                     className="absolute -top-4 -right-4 bg-destructive text-white p-3 rounded-full shadow-2xl hover:scale-110 transition-transform active:scale-95 z-10"
@@ -189,23 +199,29 @@ export function PostForm() {
                   className="absolute inset-0 opacity-0 cursor-pointer z-10"
                   onChange={handleImageSelection}
                 />
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  type="button" 
-                  className="h-10 w-10 rounded-xl text-muted-foreground/30 hover:text-primary hover:bg-primary/5 transition-all active:scale-90"
+                <Button
+                  variant="ghost"
+                  type="button"
+                  className="h-12 px-8 rounded-2xl text-muted-foreground/30 hover:text-primary hover:bg-primary/10 transition-all active:scale-95 border border-white/[0.05] bg-white/[0.02] font-bold flex items-center gap-3 group-hover:border-primary/20"
                 >
                   <ImageIcon className="h-5 w-5" />
+                  <span className="text-xs uppercase tracking-[0.2em] font-bold opacity-60">Add Media</span>
                 </Button>
               </div>
 
-              <Button 
-                type="submit" 
-                className="rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 px-6 h-10 font-bold flex items-center gap-2 transition-all hover:translate-x-1 shadow-xl shadow-primary/10 active:scale-[0.98]"
-                disabled={isSubmitting}
+              <Button
+                type="submit"
+                className="rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90 px-8 h-12 font-bold flex items-center gap-3 transition-all hover:translate-x-1 shadow-2xl shadow-primary/20 active:scale-[0.98] border border-primary/20"
+                disabled={isSubmitting || isUploading}
               >
-                <span className="text-sm">{isSubmitting ? 'Vaulting...' : 'Whisper'}</span>
-                <SendHorizontal className="h-4 w-4" />
+                <span className="text-base tracking-wide font-bold">
+                  {isSubmitting ? 'Vaulting...' : isUploading ? 'Uploading...' : 'Whisper'}
+                </span>
+                {isUploading ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  <SendHorizontal className="h-5 w-5" />
+                )}
               </Button>
             </div>
           </form>
