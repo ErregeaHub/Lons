@@ -1,6 +1,4 @@
 
-export type FeedbackCategory = 'bug' | 'feature request' | 'general inquiry';
-
 export interface Feedback {
   id: string;
   message: string;
@@ -8,6 +6,5 @@ export interface Feedback {
   isAnonymous: boolean;
   username?: string;
   createdAt: Date;
-  aiSummary?: string;
-  aiCategories?: FeedbackCategory[];
+  messageCount?: number;
 }
