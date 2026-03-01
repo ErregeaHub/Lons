@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Feedback } from '@/lib/types';
 import { getAllFeedbackAction } from '@/lib/feedback-actions';
-import { Ghost, Clock, ChevronRight, X, ArrowLeft } from 'lucide-react';
+import { Ghost, Clock, ChevronRight, X, ArrowLeft, Twitter } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -24,8 +24,10 @@ export function AdminFeedbackList() {
   }, []);
 
   const handleShareToX = (item: Feedback) => {
-    const text = encodeURIComponent(`"${item.message}" - An anonymous whisper from Lons 👻`);
-    window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+    const message = `"${item.message}"\n\n- An anonymous whisper from Lons 👻`;
+    const shareUrl = item.imageUrl || window.location.origin;
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}&url=${encodeURIComponent(shareUrl)}`;
+    window.open(twitterUrl, '_blank');
   };
 
   if (loading) {
@@ -47,10 +49,10 @@ export function AdminFeedbackList() {
           className="mb-6 text-muted-foreground hover:text-white transition-colors gap-2"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to list
+          Back to Conversations
         </Button>
 
-        <Card className="glass-card rounded-[2.5rem] overflow-hidden border-primary/20 bg-primary/5 shadow-2xl shadow-primary/10">
+        <Card className="glass-card rounded-[2.5rem] overflow-hidden border-primary/20 bg-primary/10 shadow-2xl shadow-primary/20">
           <CardContent className="p-0">
             {/* Header */}
             <div className="p-8 pb-4 flex items-center justify-between">
@@ -79,25 +81,31 @@ export function AdminFeedbackList() {
             </div>
 
             {/* High-Fidelity Mockup Area */}
-            <div className="px-8 pb-8 space-y-6">
-              <div className="relative group rounded-[2rem] overflow-hidden border border-white/10 bg-black/40 shadow-inner">
+            <div className="px-8 pb-8 space-y-8">
+              <div className="relative group rounded-[2.5rem] overflow-hidden border border-white/10 bg-black/60 shadow-2xl transition-transform hover:scale-[1.01] duration-500">
                 {/* Image Mockup */}
-                <div className="aspect-[4/5] w-full bg-muted/20 relative overflow-hidden">
+                <div className="aspect-[4/5] w-full bg-muted/10 relative overflow-hidden">
                   <img 
                     src={selectedFeedback.imageUrl || "https://picsum.photos/seed/lons/800/1000"} 
                     alt="Mockup Visual" 
-                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
+                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-700"
                     data-ai-hint="atmospheric landscape"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
                   
                   {/* Message Overlay Style - Snapchat inspired */}
-                  <div className="absolute inset-x-0 bottom-12 flex justify-center px-6">
-                    <div className="bg-black/60 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/10 shadow-2xl max-w-full text-center">
-                      <p className="text-xl md:text-2xl font-headline font-medium text-white leading-tight italic drop-shadow-md">
-                        "{selectedFeedback.message}"
+                  <div className="absolute inset-x-0 bottom-16 flex justify-center px-4">
+                    <div className="w-full bg-black/60 backdrop-blur-xl py-5 px-6 border-y border-white/10 shadow-2xl text-center">
+                      <p className="text-xl md:text-2xl font-headline font-medium text-white leading-snug drop-shadow-lg">
+                        {selectedFeedback.message}
                       </p>
                     </div>
+                  </div>
+
+                  {/* Branding Overlay */}
+                  <div className="absolute top-6 left-6 flex items-center gap-2 px-3 py-1.5 bg-black/40 backdrop-blur-md rounded-full border border-white/10">
+                    <Ghost className="h-3 w-3 text-primary" />
+                    <span className="text-[10px] font-bold text-white/80 uppercase tracking-widest">Lons</span>
                   </div>
                 </div>
               </div>
@@ -106,15 +114,13 @@ export function AdminFeedbackList() {
               <div className="flex flex-col gap-4">
                 <Button 
                   onClick={() => handleShareToX(selectedFeedback)}
-                  className="w-full rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-16 text-xl gap-3 shadow-xl transition-all active:scale-[0.98]"
+                  className="w-full rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-16 text-xl gap-3 shadow-xl transition-all active:scale-[0.98] group"
                 >
-                  <svg width="24" height="24" viewBox="0 0 1200 1227" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" />
-                  </svg>
+                  <Twitter className="h-6 w-6 fill-current group-hover:scale-110 transition-transform" />
                   Share to X
                 </Button>
-                <p className="text-center text-muted-foreground/40 text-[10px] font-bold uppercase tracking-widest">
-                  Securely vaulted and ready for the world
+                <p className="text-center text-muted-foreground/30 text-[9px] font-bold uppercase tracking-[0.3em]">
+                  Secure Transmission • Metadata Stripped • Ready for X
                 </p>
               </div>
             </div>
@@ -131,17 +137,17 @@ export function AdminFeedbackList() {
           <div 
             key={item.id} 
             onClick={() => setSelectedFeedback(item)}
-            className="group relative flex items-center gap-6 p-6 rounded-[2rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.05] hover:border-white/10 transition-all duration-300 cursor-pointer"
+            className="group relative flex items-center gap-6 p-6 rounded-[2rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.06] hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 cursor-pointer"
           >
             <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:scale-105 group-hover:bg-primary/20 transition-all">
               <Ghost className="h-8 w-8 text-primary/80" />
             </div>
 
             <div className="flex-grow min-w-0 space-y-1">
-              <h3 className="text-lg font-bold text-white/90">
+              <h3 className="text-lg font-bold text-white/90 group-hover:text-white transition-colors">
                 Inquiry #{feedback.length - index}
               </h3>
-              <p className="text-muted-foreground/60 text-sm font-medium line-clamp-1 italic">
+              <p className="text-muted-foreground/50 text-sm font-medium line-clamp-1 italic group-hover:text-muted-foreground/80 transition-colors">
                 "{item.message}"
               </p>
             </div>
@@ -154,7 +160,7 @@ export function AdminFeedbackList() {
                 </div>
                 {item.imageUrl && (
                   <Badge variant="secondary" className="bg-primary/20 text-primary hover:bg-primary/30 border-primary/20 rounded-full px-3 py-0.5 text-[9px] font-bold tracking-tighter">
-                    ATTACHMENT
+                    VISUAL ATTACHED
                   </Badge>
                 )}
               </div>
@@ -170,8 +176,11 @@ export function AdminFeedbackList() {
           </div>
         ))
       ) : (
-        <div className="text-center py-20 border border-dashed border-white/10 rounded-[2rem]">
-          <p className="text-muted-foreground font-medium">No active conversations found.</p>
+        <div className="text-center py-24 border border-dashed border-white/5 rounded-[3rem] bg-white/[0.01]">
+          <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Ghost className="h-8 w-8 text-muted-foreground/20" />
+          </div>
+          <p className="text-muted-foreground/40 font-bold uppercase tracking-widest text-xs">The vault is currently silent.</p>
         </div>
       )}
     </div>
