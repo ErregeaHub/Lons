@@ -29,7 +29,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const login = async (password: string): Promise<boolean> => {
         // Simple mock authentication
         // In a real app, this would be a server action or Firebase auth call
-        if (password === 'admin123') {
+        if (password === '(@GardaQM@)1') {
             localStorage.setItem('lons_admin_auth', 'true');
             setIsAdmin(true);
             return true;
