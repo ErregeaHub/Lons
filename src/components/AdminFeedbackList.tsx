@@ -53,40 +53,40 @@ export function AdminFeedbackList() {
         </Button>
 
         <div className="flex flex-col items-center">
-          {/* HIGH-FIDELITY VAULT CARD */}
-          <div className="relative w-full max-w-[340px] bg-[#080808] border border-white/5 rounded-[2.5rem] overflow-hidden shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9)] flex flex-col group">
+          {/* HIGH-FIDELITY VAULT CARD - DARK PURPLE THEME */}
+          <div className="relative w-full max-w-[340px] bg-[#0c0614] border border-primary/20 rounded-[2.5rem] overflow-hidden shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9)] flex flex-col group">
             
             {/* 1. HEADER METADATA */}
-            <div className="px-6 py-4 flex items-center justify-between border-b border-white/[0.03] bg-white/[0.01]">
+            <div className="px-6 py-4 flex items-center justify-between border-b border-white/[0.03] bg-primary/[0.02]">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                <span className="text-[8px] font-mono font-bold text-white/30 uppercase tracking-[0.3em]">TRNS_ID: {selectedFeedback.id.toUpperCase()}</span>
+                <span className="text-[8px] font-mono font-bold text-primary/40 uppercase tracking-[0.3em]">TRNS_ID: {selectedFeedback.id.toUpperCase()}</span>
               </div>
               <Ghost className="h-3 w-3 text-primary/20" />
             </div>
 
-            {/* 2. MESSAGE BLOCK - Isolated Typographic Section */}
-            <div className="p-7 pb-6 bg-gradient-to-b from-transparent to-primary/[0.02]">
+            {/* 2. MESSAGE BLOCK */}
+            <div className="p-7 pb-6 bg-gradient-to-b from-transparent to-primary/[0.05]">
               <div className="space-y-4">
                 <div className="w-6 h-0.5 bg-primary/30 rounded-full" />
                 <p className="text-xl md:text-2xl font-headline font-bold text-white leading-tight tracking-tight italic">
                   "{selectedFeedback.message}"
                 </p>
                 <div className="flex items-center gap-2 pt-2">
-                   <Badge variant="outline" className="border-white/5 bg-white/[0.03] text-[7px] font-bold text-white/40 rounded-full px-2 py-0 h-4 uppercase tracking-widest">
+                   <Badge variant="outline" className="border-primary/10 bg-primary/5 text-[7px] font-bold text-primary/60 rounded-full px-2 py-0 h-4 uppercase tracking-widest">
                     {selectedFeedback.isAnonymous ? 'ANON_SECURED' : selectedFeedback.username?.toUpperCase()}
                   </Badge>
                 </div>
               </div>
             </div>
 
-            {/* 3. MEDIA BLOCK - Strictly Framed */}
+            {/* 3. MEDIA BLOCK - AUTO CROP 4:3 */}
             <div className="px-6 pb-6">
-              <div className="relative rounded-3xl overflow-hidden aspect-[4/5] border border-white/[0.05] bg-black shadow-2xl group-hover:border-primary/20 transition-colors">
+              <div className="relative rounded-3xl overflow-hidden aspect-[4/3] border border-white/[0.05] bg-black shadow-2xl group-hover:border-primary/20 transition-colors">
                 <img 
-                  src={selectedFeedback.imageUrl || "https://picsum.photos/seed/lons-admin/800/1000"} 
+                  src={selectedFeedback.imageUrl || "https://picsum.photos/seed/lons-admin/800/600"} 
                   alt="Vault Asset" 
-                  className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                 
@@ -96,13 +96,13 @@ export function AdminFeedbackList() {
                     <ShieldCheck className="h-3 w-3 text-primary" />
                     <span className="text-[7px] font-bold text-white/60 uppercase tracking-widest">Asset_Encrypted</span>
                   </div>
-                  <div className="text-[7px] font-mono text-white/20 tracking-tighter">TIMESTAMP_{Date.now().toString().slice(-4)}</div>
+                  <div className="text-[8px] font-mono text-white/40 tracking-tighter font-bold">@4ku_rajaa</div>
                 </div>
               </div>
             </div>
 
             {/* 4. FOOTER ACTIONS */}
-            <div className="p-6 pt-2 bg-white/[0.02] border-t border-white/[0.03] mt-auto">
+            <div className="p-6 pt-2 bg-primary/[0.02] border-t border-white/[0.03] mt-auto">
               <Button 
                 onClick={() => handleShareToX(selectedFeedback)}
                 className="w-full rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-12 text-sm gap-3 transition-all active:scale-[0.97] shadow-[0_10px_30px_-5px_rgba(255,255,255,0.1)]"
@@ -119,7 +119,7 @@ export function AdminFeedbackList() {
             </div>
           </div>
 
-          <p className="mt-8 text-muted-foreground/20 text-[8px] font-mono font-bold uppercase tracking-[0.5em]">
+          <p className="mt-8 text-primary/20 text-[8px] font-mono font-bold uppercase tracking-[0.5em]">
             Decrypted via Lons Protocol // Admin Session
           </p>
         </div>
