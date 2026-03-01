@@ -52,13 +52,13 @@ export function AdminFeedbackList() {
           Back to Conversations
         </Button>
 
-        <Card className="glass-card rounded-[2.5rem] overflow-hidden border-primary/20 bg-primary/10 shadow-2xl shadow-primary/20">
+        <Card className="glass-card rounded-[2.5rem] overflow-hidden border-white/10 bg-[#1e1a22] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
           <CardContent className="p-0">
             {/* Header */}
             <div className="p-8 pb-4 flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center border border-primary/30 shadow-lg shadow-primary/20">
-                  <Ghost className="h-6 w-6 text-primary" />
+                <div className="w-12 h-12 rounded-2xl bg-[#2c2630] flex items-center justify-center border border-white/5">
+                  <Ghost className="h-6 w-6 text-[#E1BDFF]" />
                 </div>
                 <div>
                   <h2 className="text-xl font-headline font-bold text-white tracking-tight">
@@ -82,20 +82,19 @@ export function AdminFeedbackList() {
 
             {/* High-Fidelity Mockup Area */}
             <div className="px-8 pb-8 space-y-8">
-              <div className="relative group rounded-[2.5rem] overflow-hidden border border-white/10 bg-black/60 shadow-2xl transition-transform hover:scale-[1.01] duration-500">
+              <div className="relative group rounded-[2.5rem] overflow-hidden border border-white/10 bg-black/60 shadow-2xl transition-transform duration-500">
                 {/* Image Mockup */}
                 <div className="aspect-[4/5] w-full bg-muted/10 relative overflow-hidden flex items-center justify-center">
                   <img 
-                    src={selectedFeedback.imageUrl || "https://picsum.photos/seed/lons-abstract/800/1000"} 
+                    src={selectedFeedback.imageUrl || "https://picsum.photos/seed/lons-nature/800/1000"} 
                     alt="Mockup Visual" 
-                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-700"
+                    className="w-full h-full object-cover opacity-90 transition-opacity duration-700"
                     data-ai-hint="atmospheric landscape"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
                   
-                  {/* Message Overlay Style - Snapchat inspired */}
-                  <div className="absolute inset-x-0 bottom-16 flex justify-center">
-                    <div className="w-full bg-black/60 backdrop-blur-xl py-6 px-8 border-y border-white/10 shadow-2xl text-center">
+                  {/* Message Overlay Style - Top Placement per sketch */}
+                  <div className="absolute inset-x-0 top-12 flex justify-center z-10">
+                    <div className="w-full bg-black/50 backdrop-blur-xl py-6 px-8 border-y border-white/10 shadow-2xl text-center">
                       <p className="text-xl md:text-2xl font-headline font-bold text-white leading-snug drop-shadow-lg italic">
                         "{selectedFeedback.message}"
                       </p>
@@ -103,8 +102,8 @@ export function AdminFeedbackList() {
                   </div>
 
                   {/* Branding Overlay */}
-                  <div className="absolute top-6 left-6 flex items-center gap-2 px-3 py-1.5 bg-black/40 backdrop-blur-md rounded-full border border-white/10">
-                    <Ghost className="h-3 w-3 text-primary" />
+                  <div className="absolute top-6 left-6 flex items-center gap-2 px-3 py-1.5 bg-black/40 backdrop-blur-md rounded-full border border-white/10 z-20">
+                    <Ghost className="h-3 w-3 text-[#E1BDFF]" />
                     <span className="text-[10px] font-bold text-white/80 uppercase tracking-widest">Lons</span>
                   </div>
                 </div>
@@ -114,9 +113,9 @@ export function AdminFeedbackList() {
               <div className="flex flex-col gap-4">
                 <Button 
                   onClick={() => handleShareToX(selectedFeedback)}
-                  className="w-full rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-16 text-xl gap-3 shadow-xl transition-all active:scale-[0.98] group"
+                  className="w-full rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-16 text-lg gap-3 shadow-xl transition-all active:scale-[0.98] group"
                 >
-                  <Twitter className="h-6 w-6 fill-current group-hover:scale-110 transition-transform" />
+                  <Twitter className="h-5 w-5 fill-current" />
                   Share to X
                 </Button>
                 <p className="text-center text-muted-foreground/30 text-[9px] font-bold uppercase tracking-[0.3em]">
@@ -137,10 +136,10 @@ export function AdminFeedbackList() {
           <div 
             key={item.id} 
             onClick={() => setSelectedFeedback(item)}
-            className="group relative flex items-center gap-6 p-6 rounded-[2rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.06] hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 cursor-pointer"
+            className="group relative flex items-center gap-6 p-6 rounded-[2rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.06] hover:border-[#E1BDFF]/20 hover:shadow-lg hover:shadow-[#E1BDFF]/5 transition-all duration-300 cursor-pointer"
           >
-            <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:scale-105 group-hover:bg-primary/20 transition-all">
-              <Ghost className="h-8 w-8 text-primary/80" />
+            <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center border border-white/5 group-hover:scale-105 group-hover:bg-[#E1BDFF]/10 transition-all">
+              <Ghost className="h-8 w-8 text-[#E1BDFF]/60" />
             </div>
 
             <div className="flex-grow min-w-0 space-y-1">
@@ -159,7 +158,7 @@ export function AdminFeedbackList() {
                   {formatDistanceToNow(item.createdAt)} ago
                 </div>
                 {item.imageUrl && (
-                  <Badge variant="secondary" className="bg-primary/20 text-primary hover:bg-primary/30 border-primary/20 rounded-full px-3 py-0.5 text-[9px] font-bold tracking-tighter">
+                  <Badge variant="secondary" className="bg-[#E1BDFF]/10 text-[#E1BDFF] hover:bg-[#E1BDFF]/20 border-white/5 rounded-full px-3 py-0.5 text-[9px] font-bold tracking-tighter">
                     VISUAL ATTACHED
                   </Badge>
                 )}
@@ -168,7 +167,7 @@ export function AdminFeedbackList() {
               <Button 
                 variant="outline" 
                 size="icon" 
-                className="h-10 w-10 rounded-full border-white/10 bg-white/5 group-hover:bg-primary group-hover:border-primary group-hover:text-primary-foreground transition-all duration-300"
+                className="h-10 w-10 rounded-full border-white/10 bg-white/5 group-hover:bg-[#E1BDFF] group-hover:border-[#E1BDFF] group-hover:text-black transition-all duration-300"
               >
                 <ChevronRight className="h-5 w-5" />
               </Button>

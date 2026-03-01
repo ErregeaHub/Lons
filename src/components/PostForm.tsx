@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Image, SendHorizontal, X, CheckCircle2, RotateCcw, Twitter, Ghost } from 'lucide-react';
+import { Image as ImageIcon, SendHorizontal, X, CheckCircle2, RotateCcw, Twitter, Ghost } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -84,11 +84,11 @@ export function PostForm() {
 
   if (submittedData) {
     return (
-      <Card className="glass-card rounded-[2.5rem] overflow-hidden border-primary/20 bg-primary/5 animate-in fade-in zoom-in duration-500 shadow-2xl shadow-primary/10">
+      <Card className="glass-card rounded-[2.5rem] overflow-hidden border-white/10 bg-[#1e1a22] animate-in fade-in zoom-in duration-500 shadow-2xl">
         <CardContent className="p-10 text-center space-y-10">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center border border-primary/30 shadow-inner">
-              <CheckCircle2 className="h-10 w-10 text-primary" />
+            <div className="w-20 h-20 bg-[#E1BDFF]/20 rounded-full flex items-center justify-center border border-[#E1BDFF]/30 shadow-inner">
+              <CheckCircle2 className="h-10 w-10 text-[#E1BDFF]" />
             </div>
             <div className="space-y-2">
               <h2 className="text-3xl font-headline font-bold text-white tracking-tight">Whisper Vaulted</h2>
@@ -98,19 +98,18 @@ export function PostForm() {
             </div>
           </div>
 
-          {/* High-Fidelity Mockup (Snapchat Style) */}
-          <div className="relative group rounded-[2.5rem] overflow-hidden border border-white/10 bg-black/60 shadow-2xl transition-transform hover:scale-[1.01] duration-500 mx-auto max-w-md">
+          {/* High-Fidelity Mockup - Top Placement per sketch */}
+          <div className="relative group rounded-[2.5rem] overflow-hidden border border-white/10 bg-black/60 shadow-2xl mx-auto max-w-md">
             <div className="aspect-[4/5] w-full bg-muted/10 relative overflow-hidden flex items-center justify-center">
               <img 
-                src={submittedData.imageUrl || "https://picsum.photos/seed/lons-abstract/800/1000"} 
+                src={submittedData.imageUrl || "https://picsum.photos/seed/lons-nature/800/1000"} 
                 alt="Mockup Preview" 
                 className="w-full h-full object-cover opacity-90 transition-opacity duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
               
-              {/* Message Overlay Style - Snapchat inspired */}
-              <div className="absolute inset-x-0 bottom-12 flex justify-center">
-                <div className="w-full bg-black/60 backdrop-blur-xl py-5 px-6 border-y border-white/10 shadow-2xl text-center">
+              {/* Message Overlay Style - Top Placement */}
+              <div className="absolute inset-x-0 top-10 flex justify-center z-10">
+                <div className="w-full bg-black/50 backdrop-blur-xl py-5 px-6 border-y border-white/10 shadow-2xl text-center">
                   <p className="text-lg md:text-xl font-headline font-bold text-white leading-snug drop-shadow-lg italic">
                     "{submittedData.message}"
                   </p>
@@ -118,8 +117,8 @@ export function PostForm() {
               </div>
 
               {/* Branding Overlay */}
-              <div className="absolute top-6 left-6 flex items-center gap-2 px-3 py-1.5 bg-black/40 backdrop-blur-md rounded-full border border-white/10">
-                <Ghost className="h-3 w-3 text-primary" />
+              <div className="absolute top-6 left-6 flex items-center gap-2 px-3 py-1.5 bg-black/40 backdrop-blur-md rounded-full border border-white/10 z-20">
+                <Ghost className="h-3 w-3 text-[#E1BDFF]" />
                 <span className="text-[10px] font-bold text-white/80 uppercase tracking-widest">Lons</span>
               </div>
             </div>
@@ -128,15 +127,15 @@ export function PostForm() {
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Button 
               onClick={handleShareToX}
-              className="flex-1 rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-16 text-xl gap-3 shadow-xl transition-all active:scale-[0.98] group"
+              className="flex-1 rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-16 text-lg gap-3 shadow-xl transition-all active:scale-[0.98]"
             >
-              <Twitter className="h-6 w-6 fill-current group-hover:scale-110 transition-transform" />
+              <Twitter className="h-5 w-5 fill-current" />
               Share to X
             </Button>
             <Button 
               variant="outline"
               onClick={resetForm}
-              className="rounded-2xl border-white/10 bg-white/5 hover:bg-white/10 text-white font-bold h-16 px-8 transition-all hover:border-white/20"
+              className="rounded-2xl border-white/10 bg-white/5 hover:bg-white/10 text-white font-bold h-16 px-8 transition-all"
             >
               <RotateCcw className="h-5 w-5 mr-3" />
               New Whisper
@@ -165,7 +164,7 @@ export function PostForm() {
                   id="anonymous-mode"
                   checked={isAnonymous}
                   onCheckedChange={(checked) => form.setValue('isAnonymous', checked)}
-                  className="data-[state=checked]:bg-primary"
+                  className="data-[state=checked]:bg-[#E1BDFF]"
                 />
               </div>
             </div>
@@ -179,7 +178,7 @@ export function PostForm() {
                     <FormControl>
                       <Textarea 
                         placeholder="What's on your mind? Be bold, be anonymous..." 
-                        className="min-h-[200px] bg-black/30 border-white/5 rounded-[1.5rem] text-lg focus-visible:ring-primary/20 placeholder:text-muted-foreground/20 resize-none p-8 font-medium leading-relaxed"
+                        className="min-h-[200px] bg-black/30 border-white/5 rounded-[1.5rem] text-lg focus-visible:ring-[#E1BDFF]/20 placeholder:text-muted-foreground/20 resize-none p-8 font-medium leading-relaxed"
                         {...field} 
                       />
                     </FormControl>
@@ -196,7 +195,7 @@ export function PostForm() {
                     <FormItem className="animate-in fade-in slide-in-from-top-2 duration-300">
                       <Input 
                         placeholder="Your name or handle" 
-                        className="bg-black/20 border-white/5 rounded-xl h-12 text-base px-5 focus-visible:ring-primary/20" 
+                        className="bg-black/20 border-white/5 rounded-xl h-12 text-base px-5 focus-visible:ring-[#E1BDFF]/20" 
                         {...field} 
                       />
                     </FormItem>
@@ -237,15 +236,15 @@ export function PostForm() {
                   variant="ghost" 
                   size="icon" 
                   type="button" 
-                  className="h-14 w-14 rounded-2xl text-muted-foreground/40 hover:text-primary hover:bg-primary/10 transition-all active:scale-90"
+                  className="h-14 w-14 rounded-2xl text-muted-foreground/40 hover:text-[#E1BDFF] hover:bg-[#E1BDFF]/10 transition-all active:scale-90"
                 >
-                  <Image className="h-7 w-7" />
+                  <ImageIcon className="h-7 w-7" />
                 </Button>
               </div>
 
               <Button 
                 type="submit" 
-                className="rounded-2xl bg-primary hover:bg-primary/90 px-10 py-7 font-bold flex items-center gap-4 transition-all hover:translate-x-1 shadow-xl shadow-primary/20 active:scale-[0.98]"
+                className="rounded-2xl bg-[#E1BDFF] text-black hover:bg-[#E1BDFF]/90 px-10 py-7 font-bold flex items-center gap-4 transition-all hover:translate-x-1 shadow-xl shadow-[#E1BDFF]/20 active:scale-[0.98]"
                 disabled={isSubmitting}
               >
                 <span className="text-lg">{isSubmitting ? 'Vaulting...' : 'Send Whisper'}</span>
