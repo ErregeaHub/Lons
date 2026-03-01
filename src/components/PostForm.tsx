@@ -99,54 +99,59 @@ export function PostForm() {
           </div>
 
           {/* Compact Screenshot-Friendly Mockup */}
-          <div className="relative group rounded-[1.5rem] overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-2xl mx-auto max-w-[320px] flex flex-col">
-             {/* Header Branding */}
-             <div className="px-4 py-2.5 flex items-center justify-between border-b border-white/5 bg-white/[0.02]">
+          <div className="relative rounded-[2rem] overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-2xl mx-auto max-w-[320px] flex flex-col">
+             
+             {/* 1. Header Branding */}
+             <div className="px-5 py-3 flex items-center justify-between border-b border-white/5 bg-white/[0.02]">
                 <div className="flex items-center gap-2">
-                  <Ghost className="h-2.5 w-2.5 text-[#E1BDFF]" />
-                  <span className="text-[7px] font-bold text-white/50 uppercase tracking-[0.3em]">Lons Vault</span>
+                  <Ghost className="h-3 w-3 text-[#E1BDFF]" />
+                  <span className="text-[8px] font-bold text-white/50 uppercase tracking-[0.3em]">Lons Vault</span>
                 </div>
-                <div className="w-1 h-1 rounded-full bg-[#E1BDFF]/60 animate-pulse" />
+                <div className="w-1.5 h-1.5 rounded-full bg-[#E1BDFF]/60 animate-pulse" />
              </div>
 
-            {/* Message Area (Top) */}
-            <div className="p-6 bg-[#141414] border-b border-white/5 text-left">
+            {/* 2. Message Area (Text) */}
+            <div className="p-7 bg-[#141414] border-b border-white/5 text-left">
               <p className="text-base font-headline font-bold text-white leading-tight italic">
                 "{submittedData.message}"
               </p>
             </div>
             
-            {/* Image Area (Bottom) */}
-            <div className="w-full bg-black overflow-hidden h-[240px] relative">
+            {/* 3. Image Area */}
+            <div className="w-full bg-black overflow-hidden aspect-[4/3] relative">
               <img 
                 src={submittedData.imageUrl || "https://picsum.photos/seed/lons-nature/800/1000"} 
                 alt="Mockup Preview" 
-                className="w-full h-full object-cover opacity-80"
+                className="w-full h-full object-cover opacity-90"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
               
-              <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2 py-1 rounded-md bg-black/40 backdrop-blur-md border border-white/10">
-                <ShieldCheck className="h-2.5 w-2.5 text-[#E1BDFF]" />
-                <span className="text-[6px] font-bold text-white uppercase tracking-wider">Secured</span>
+              <div className="absolute bottom-4 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-black/40 backdrop-blur-md border border-white/10">
+                <ShieldCheck className="h-3 w-3 text-[#E1BDFF]" />
+                <span className="text-[7px] font-bold text-white uppercase tracking-wider">Secured</span>
               </div>
+            </div>
+
+            {/* 4. Integrated Share Action */}
+            <div className="p-4 bg-[#0d0d0d]">
+              <Button 
+                onClick={handleShareToX}
+                className="w-full rounded-xl bg-white text-black hover:bg-white/90 font-bold h-11 text-sm gap-3 transition-all active:scale-[0.98]"
+              >
+                <Twitter className="h-4 w-4 fill-current" />
+                Share to X
+              </Button>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 pt-2">
-            <Button 
-              onClick={handleShareToX}
-              className="flex-1 rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-12 text-sm gap-3 shadow-xl transition-all active:scale-[0.98]"
-            >
-              <Twitter className="h-4 w-4 fill-current" />
-              Share to X
-            </Button>
+          <div className="flex justify-center">
             <Button 
               variant="outline"
               onClick={resetForm}
-              className="rounded-2xl border-white/10 bg-white/5 hover:bg-white/10 text-white font-bold h-12 px-6 text-sm transition-all"
+              className="rounded-2xl border-white/10 bg-white/5 hover:bg-white/10 text-white font-bold h-12 px-8 text-sm transition-all"
             >
               <RotateCcw className="h-4 w-4 mr-2" />
-              Reset
+              Send Another
             </Button>
           </div>
         </CardContent>
