@@ -78,12 +78,12 @@ export function AdminFeedbackList() {
           {/* HIGH-FIDELITY WHISPER CARD */}
           <div className={cn(
             "relative w-full max-w-[600px] bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] hover:border-primary/30 transition-all duration-300 cursor-pointer rounded-xl overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,1)] flex flex-col group",
-            selectedFeedback.imageUrl ? "min-h-[50vh]" : "min-h-[30vh]"
+            selectedFeedback.imageUrl ? "min-h-[40vh] md:min-h-[50vh]" : "min-h-[25vh] md:min-h-[30vh]"
           )}>
 
             {/* 1. MESSAGE BLOCK */}
             <div className={cn(
-              "p-10 bg-gradient-to-b from-primary/10 to-transparent flex flex-col",
+              "p-6 md:p-10 bg-gradient-to-b from-primary/10 to-transparent flex flex-col",
               !selectedFeedback.imageUrl && "flex-1 justify-center items-center text-center"
             )}>
               <div className="space-y-6 w-full">
@@ -104,8 +104,8 @@ export function AdminFeedbackList() {
 
             {/* 2. MEDIA BLOCK - Only show if image exists */}
             {selectedFeedback.imageUrl && (
-              <div className="px-8 pb-8 flex-1">
-                <div className="relative rounded-xl overflow-hidden aspect-[4/3] border border-white/[0.05] bg-black shadow-2xl transition-all h-full">
+              <div className="px-4 md:px-8 pb-6 md:pb-8 flex-1">
+                <div className="relative rounded-xl overflow-hidden aspect-[1/1] sm:aspect-[4/3] border border-white/[0.05] bg-black shadow-2xl transition-all h-full">
                   <img
                     src={selectedFeedback.imageUrl}
                     alt="Vault Asset"
@@ -159,7 +159,7 @@ export function AdminFeedbackList() {
           <div
             key={item.id}
             onClick={() => setSelectedFeedback(item)}
-            className="group relative flex items-center gap-6 p-8 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] hover:border-primary/30 transition-all duration-300 cursor-pointer"
+            className="group relative flex items-center gap-4 md:gap-6 p-4 md:p-8 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] hover:border-primary/30 transition-all duration-300 cursor-pointer"
           >
             <div className="flex-shrink-0 w-20 h-20 rounded-xl bg-white/[0.03] flex items-center justify-center border border-white/[0.05] group-hover:scale-105 group-hover:bg-primary/5 transition-all">
               <Ghost className="h-10 w-10 text-primary/40 group-hover:text-primary transition-colors" />

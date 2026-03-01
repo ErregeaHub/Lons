@@ -115,15 +115,15 @@ export function PostForm() {
   return (
     <Card className="glass-card rounded-2xl overflow-hidden border-white/[0.03] shadow-2xl shadow-black/60 relative">
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-50" />
-      <CardContent className="p-10 md:p-14">
+      <CardContent className="p-6 md:p-14">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-12">
-            <div className="flex items-center justify-between">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 md:space-y-12">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 sm:gap-4">
               <div className="space-y-2">
-                <h2 className="text-white font-headline font-bold text-4xl tracking-tight">New Whisper</h2>
+                <h2 className="text-white font-headline font-bold text-3xl md:text-4xl tracking-tight">New Whisper</h2>
                 <p className="text-primary/40 text-[10px] font-bold uppercase tracking-[0.4em]">Vault Encryption Status: Active</p>
               </div>
-              <div className="flex items-center gap-4 bg-white/[0.02] border border-white/[0.05] px-5 py-3 rounded-full">
+              <div className="flex items-center gap-4 bg-white/[0.02] border border-white/[0.05] px-4 py-2 sm:px-5 sm:py-3 rounded-full">
                 <Label htmlFor="anonymous-mode" className="text-[11px] font-bold text-muted-foreground/40 cursor-pointer uppercase tracking-widest">
                   Private
                 </Label>
@@ -145,7 +145,7 @@ export function PostForm() {
                     <FormControl>
                       <Textarea
                         placeholder="What's hidden in the vault?"
-                        className="min-h-[250px] bg-black/20 border-white/[0.05] rounded-2xl text-2xl focus-visible:ring-primary/10 placeholder:text-muted-foreground/10 resize-none p-10 font-medium leading-relaxed transition-all focus:bg-black/30"
+                        className="min-h-[200px] md:min-h-[250px] bg-black/20 border-white/[0.05] rounded-2xl text-xl md:text-2xl focus-visible:ring-primary/10 placeholder:text-muted-foreground/10 resize-none p-6 md:p-10 font-medium leading-relaxed transition-all focus:bg-black/30"
                         {...field}
                       />
                     </FormControl>
@@ -191,8 +191,8 @@ export function PostForm() {
               )}
             </div>
 
-            <div className="flex items-center justify-between pt-8 border-t border-white/[0.03]">
-              <div className="relative overflow-hidden group">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-6 pt-8 border-t border-white/[0.03]">
+              <div className="relative overflow-hidden group w-full sm:w-auto">
                 <input
                   type="file"
                   accept="image/*"
@@ -202,7 +202,7 @@ export function PostForm() {
                 <Button
                   variant="ghost"
                   type="button"
-                  className="h-12 px-8 rounded-2xl text-muted-foreground/30 hover:text-primary hover:bg-primary/10 transition-all active:scale-95 border border-white/[0.05] bg-white/[0.02] font-bold flex items-center gap-3 group-hover:border-primary/20"
+                  className="w-full sm:w-auto h-12 px-8 rounded-2xl text-muted-foreground/30 hover:text-primary hover:bg-primary/10 transition-all active:scale-95 border border-white/[0.05] bg-white/[0.02] font-bold flex items-center justify-center gap-3 group-hover:border-primary/20"
                 >
                   <ImageIcon className="h-5 w-5" />
                   <span className="text-xs uppercase tracking-[0.2em] font-bold opacity-60">Add Media</span>
@@ -211,7 +211,7 @@ export function PostForm() {
 
               <Button
                 type="submit"
-                className="rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90 px-8 h-12 font-bold flex items-center gap-3 transition-all hover:translate-x-1 shadow-2xl shadow-primary/20 active:scale-[0.98] border border-primary/20"
+                className="w-full sm:w-auto rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90 px-8 h-12 font-bold flex items-center justify-center gap-3 transition-all hover:translate-x-1 shadow-2xl shadow-primary/20 active:scale-[0.98] border border-primary/20"
                 disabled={isSubmitting || isUploading}
               >
                 <span className="text-base tracking-wide font-bold">

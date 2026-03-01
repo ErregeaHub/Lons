@@ -28,9 +28,9 @@ export async function submitFeedbackAction(formData: {
     await addFeedbackItem(newFeedback);
     console.log('>>> [Action] Supabase success');
 
-    // Fire-and-forget Telegram notification
-    console.log('>>> [Action] Triggering Telegram notification (async)...');
-    sendTelegramNotification(
+    // Await Telegram notification to ensure delivery on Vercel
+    console.log('>>> [Action] Triggering Telegram notification...');
+    await sendTelegramNotification(
       formData.message,
       formData.username,
       formData.isAnonymous,

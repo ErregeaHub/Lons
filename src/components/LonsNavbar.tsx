@@ -11,16 +11,16 @@ export function LonsNavbar() {
   const { isAdmin, logout } = useAuth();
 
   return (
-    <nav className="z-50 py-6">
+    <nav className="z-50 py-4 md:py-6">
       <div className="container mx-auto px-4 flex items-center justify-between max-w-6xl">
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 bg-primary/20 rounded-xl flex items-center justify-center border border-primary/30 group-hover:bg-primary/30 transition-all">
-            <Ghost className="text-primary h-5 w-5" />
+        <Link href="/" className="flex items-center gap-2 md:gap-3 group">
+          <div className="w-8 h-8 md:w-9 md:h-9 bg-primary/20 rounded-xl flex items-center justify-center border border-primary/30 group-hover:bg-primary/30 transition-all">
+            <Ghost className="text-primary h-4 w-4 md:h-5 md:w-5" />
           </div>
-          <span className="text-xl font-headline font-bold text-foreground/90">Lons</span>
+          <span className="text-lg md:text-xl font-headline font-bold text-foreground/90">Lons</span>
         </Link>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1.5 md:gap-3">
           <Link
             href="/"
             className={cn(
