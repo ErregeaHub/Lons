@@ -85,62 +85,62 @@ export function PostForm() {
   if (submittedData) {
     return (
       <Card className="glass-card rounded-[2.5rem] overflow-hidden border-white/10 bg-[#1e1a22] animate-in fade-in zoom-in duration-500 shadow-2xl">
-        <CardContent className="p-10 text-center space-y-10">
+        <CardContent className="p-10 text-center space-y-8">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-20 h-20 bg-[#E1BDFF]/20 rounded-full flex items-center justify-center border border-[#E1BDFF]/30 shadow-inner">
-              <CheckCircle2 className="h-10 w-10 text-[#E1BDFF]" />
+            <div className="w-16 h-16 bg-[#E1BDFF]/20 rounded-full flex items-center justify-center border border-[#E1BDFF]/30 shadow-inner">
+              <CheckCircle2 className="h-8 w-8 text-[#E1BDFF]" />
             </div>
-            <div className="space-y-2">
-              <h2 className="text-3xl font-headline font-bold text-white tracking-tight">Whisper Vaulted</h2>
-              <p className="text-muted-foreground font-medium max-w-sm mx-auto">
-                Your expression is safe and ready to be shared.
+            <div className="space-y-1">
+              <h2 className="text-2xl font-headline font-bold text-white tracking-tight">Whisper Vaulted</h2>
+              <p className="text-muted-foreground text-sm font-medium max-w-sm mx-auto">
+                Ready to be shared with the world.
               </p>
             </div>
           </div>
 
-          {/* High-Fidelity Mockup - Non-overlapping Layout */}
-          <div className="relative group rounded-[2.5rem] overflow-hidden border border-white/10 bg-black shadow-2xl mx-auto max-w-md flex flex-col">
+          {/* Compact High-Fidelity Mockup */}
+          <div className="relative group rounded-[2rem] overflow-hidden border border-white/10 bg-black shadow-2xl mx-auto max-w-[340px] flex flex-col">
              {/* Header Branding */}
-             <div className="p-6 flex items-center justify-between border-b border-white/5 bg-white/[0.02]">
+             <div className="px-5 py-3 flex items-center justify-between border-b border-white/5 bg-white/[0.02]">
                 <div className="flex items-center gap-2">
-                  <Ghost className="h-4 w-4 text-[#E1BDFF]" />
-                  <span className="text-[10px] font-bold text-white/80 uppercase tracking-widest">Lons Anonymous</span>
+                  <Ghost className="h-3 w-3 text-[#E1BDFF]" />
+                  <span className="text-[8px] font-bold text-white/60 uppercase tracking-widest">Lons Vault</span>
                 </div>
-                <div className="w-2 h-2 rounded-full bg-[#E1BDFF] animate-pulse" />
+                <div className="w-1.5 h-1.5 rounded-full bg-[#E1BDFF] animate-pulse" />
              </div>
 
             {/* Message Area (Top) */}
-            <div className="p-8 pb-6 bg-gradient-to-b from-white/[0.03] to-transparent text-left">
-              <p className="text-xl md:text-2xl font-headline font-bold text-white leading-relaxed italic">
+            <div className="p-6 bg-gradient-to-b from-white/[0.03] to-transparent text-left">
+              <p className="text-lg font-headline font-bold text-white leading-snug italic">
                 "{submittedData.message}"
               </p>
             </div>
             
-            {/* Image Area (Bottom) */}
-            <div className="w-full bg-muted/10 overflow-hidden">
+            {/* Image Area (Bottom) - Controlled Height */}
+            <div className="w-full bg-muted/10 overflow-hidden h-[300px]">
               <img 
                 src={submittedData.imageUrl || "https://picsum.photos/seed/lons-nature/800/1000"} 
                 alt="Mockup Preview" 
-                className="w-full h-auto object-cover opacity-90 transition-opacity duration-700"
+                className="w-full h-full object-cover opacity-90 transition-opacity duration-700"
               />
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row gap-4 pt-2">
             <Button 
               onClick={handleShareToX}
-              className="flex-1 rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-16 text-lg gap-3 shadow-xl transition-all active:scale-[0.98]"
+              className="flex-1 rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-14 text-base gap-3 shadow-xl transition-all active:scale-[0.98]"
             >
-              <Twitter className="h-5 w-5 fill-current" />
+              <Twitter className="h-4 w-4 fill-current" />
               Share to X
             </Button>
             <Button 
               variant="outline"
               onClick={resetForm}
-              className="rounded-2xl border-white/10 bg-white/5 hover:bg-white/10 text-white font-bold h-16 px-8 transition-all"
+              className="rounded-2xl border-white/10 bg-white/5 hover:bg-white/10 text-white font-bold h-14 px-8 transition-all"
             >
-              <RotateCcw className="h-5 w-5 mr-3" />
-              New Whisper
+              <RotateCcw className="h-4 w-4 mr-2" />
+              Reset
             </Button>
           </div>
         </CardContent>

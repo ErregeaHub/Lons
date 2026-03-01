@@ -80,44 +80,44 @@ export function AdminFeedbackList() {
               </Button>
             </div>
 
-            {/* High-Fidelity Mockup Area - Non-overlapping layout */}
-            <div className="px-8 pb-8 space-y-8">
-              <div className="relative group rounded-[2.5rem] overflow-hidden border border-white/10 bg-black shadow-2xl transition-transform duration-500 flex flex-col">
+            {/* Compact High-Fidelity Mockup Area */}
+            <div className="px-8 pb-8 space-y-6 flex flex-col items-center">
+              <div className="relative group rounded-[2rem] overflow-hidden border border-white/10 bg-black shadow-2xl flex flex-col w-full max-w-[340px]">
                 {/* Branding Strip */}
-                <div className="p-4 bg-white/[0.02] border-b border-white/5 flex items-center gap-2">
+                <div className="px-4 py-3 bg-white/[0.02] border-b border-white/5 flex items-center gap-2">
                    <Ghost className="h-3 w-3 text-[#E1BDFF]" />
-                   <span className="text-[9px] font-bold text-white/40 uppercase tracking-[0.3em]">Vault Transmission</span>
+                   <span className="text-[8px] font-bold text-white/30 uppercase tracking-[0.3em]">Vault Transmission</span>
                 </div>
 
                 {/* Message Block (Top) */}
-                <div className="p-8 pb-6 bg-gradient-to-b from-white/[0.04] to-transparent">
-                  <p className="text-xl md:text-2xl font-headline font-bold text-white leading-relaxed italic">
+                <div className="p-6 bg-gradient-to-b from-white/[0.04] to-transparent">
+                  <p className="text-lg font-headline font-bold text-white leading-tight italic">
                     "{selectedFeedback.message}"
                   </p>
                 </div>
 
-                {/* Image Block (Bottom) */}
-                <div className="w-full bg-muted/5 relative overflow-hidden">
+                {/* Image Block (Bottom) - Compact height */}
+                <div className="w-full bg-muted/5 relative overflow-hidden h-[300px]">
                   <img 
                     src={selectedFeedback.imageUrl || "https://picsum.photos/seed/lons-nature/800/1000"} 
                     alt="Mockup Visual" 
-                    className="w-full h-auto object-cover opacity-90 transition-opacity duration-700"
+                    className="w-full h-full object-cover opacity-90 transition-opacity duration-700"
                     data-ai-hint="atmospheric landscape"
                   />
                 </div>
               </div>
 
               {/* Action Area */}
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 w-full max-w-[340px]">
                 <Button 
                   onClick={() => handleShareToX(selectedFeedback)}
-                  className="w-full rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-16 text-lg gap-3 shadow-xl transition-all active:scale-[0.98] group"
+                  className="w-full rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-14 text-base gap-3 shadow-xl transition-all active:scale-[0.98] group"
                 >
-                  <Twitter className="h-5 w-5 fill-current" />
+                  <Twitter className="h-4 w-4 fill-current" />
                   Share to X
                 </Button>
-                <p className="text-center text-muted-foreground/30 text-[9px] font-bold uppercase tracking-[0.3em]">
-                  Metadata Stripped • Secured Transmission • Ready for X
+                <p className="text-center text-muted-foreground/20 text-[8px] font-bold uppercase tracking-[0.3em]">
+                  Metadata Stripped • Secured Transmission
                 </p>
               </div>
             </div>
