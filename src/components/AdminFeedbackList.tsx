@@ -74,7 +74,7 @@ export function AdminFeedbackList() {
                 </p>
                 <div className={cn("flex items-center gap-2 pt-2", !selectedFeedback.imageUrl && "justify-center")}>
                    <Badge variant="outline" className="border-primary/20 bg-primary/10 text-[10px] font-bold text-primary/80 rounded-md px-3 py-1 uppercase tracking-widest">
-                    {selectedFeedback.isAnonymous ? 'ANON_SECURED' : selectedFeedback.username?.toUpperCase()}
+                    {selectedFeedback.isAnonymous ? 'ANONYMOUS' : selectedFeedback.username?.toUpperCase()}
                   </Badge>
                 </div>
               </div>

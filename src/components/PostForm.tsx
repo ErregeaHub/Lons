@@ -117,7 +117,7 @@ export function PostForm() {
                 </p>
                 <div className={cn("flex items-center gap-2 pt-2", !submittedData.imageUrl && "justify-center")}>
                    <Badge variant="outline" className="border-primary/20 bg-primary/10 text-[10px] font-bold text-primary/80 rounded-md px-3 py-1 uppercase tracking-widest">
-                    {submittedData.isAnonymous ? 'ANON_SECURED' : submittedData.username?.toUpperCase()}
+                    {submittedData.isAnonymous ? 'ANONYMOUS' : submittedData.username?.toUpperCase()}
                   </Badge>
                 </div>
               </div>
