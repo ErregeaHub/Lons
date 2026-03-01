@@ -91,9 +91,9 @@ export function PostForm() {
             <Button 
               variant="outline"
               onClick={resetForm}
-              className="rounded-full border-white/10 text-muted-foreground hover:text-white transition-all gap-3 h-14 px-10 hover:bg-white/5 font-bold"
+              className="rounded-full border-white/10 text-muted-foreground hover:text-white transition-all gap-2 h-10 px-6 hover:bg-white/5 font-bold"
             >
-              <RotateCcw className="h-5 w-5" />
+              <RotateCcw className="h-4 w-4" />
               Reset & Send Another
             </Button>
           </div>
@@ -193,19 +193,19 @@ export function PostForm() {
                   variant="ghost" 
                   size="icon" 
                   type="button" 
-                  className="h-14 w-14 rounded-xl text-muted-foreground/30 hover:text-primary hover:bg-primary/5 transition-all active:scale-90"
+                  className="h-10 w-10 rounded-xl text-muted-foreground/30 hover:text-primary hover:bg-primary/5 transition-all active:scale-90"
                 >
-                  <ImageIcon className="h-6 w-6" />
+                  <ImageIcon className="h-5 w-5" />
                 </Button>
               </div>
 
               <Button 
                 type="submit" 
-                className="rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 px-8 h-14 font-bold flex items-center gap-4 transition-all hover:translate-x-1 shadow-xl shadow-primary/10 active:scale-[0.98]"
+                className="rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 px-6 h-10 font-bold flex items-center gap-2 transition-all hover:translate-x-1 shadow-xl shadow-primary/10 active:scale-[0.98]"
                 disabled={isSubmitting}
               >
-                <span className="text-lg">{isSubmitting ? 'Vaulting...' : 'Whisper'}</span>
-                <SendHorizontal className="h-5 w-5" />
+                <span className="text-sm">{isSubmitting ? 'Vaulting...' : 'Whisper'}</span>
+                <SendHorizontal className="h-4 w-4" />
               </Button>
             </div>
           </form>
