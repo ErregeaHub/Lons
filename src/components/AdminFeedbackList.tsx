@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { Feedback } from '@/lib/types';
 import { getAllFeedbackAction } from '@/lib/feedback-actions';
-import { Ghost, Clock, ChevronRight, X, ArrowLeft } from 'lucide-react';
+import { Ghost, Clock, ChevronRight, X, ArrowLeft, Share2 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -25,7 +25,7 @@ export function AdminFeedbackList() {
   }, []);
 
   const handleShareToX = (item: Feedback) => {
-    const text = encodeURIComponent(`"${item.message}" - Anonymous Whisper from Lons 👻`);
+    const text = encodeURIComponent(`"${item.message}" - An anonymous whisper from Lons 👻`);
     window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
   };
 
@@ -41,7 +41,7 @@ export function AdminFeedbackList() {
 
   if (selectedFeedback) {
     return (
-      <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-2xl mx-auto">
         <Button 
           variant="ghost" 
           onClick={() => setSelectedFeedback(null)}
@@ -51,59 +51,71 @@ export function AdminFeedbackList() {
           Back to list
         </Button>
 
-        <Card className="glass-card rounded-[2rem] overflow-hidden border-primary/20 bg-primary/5">
-          <CardContent className="p-8 space-y-8">
-            <div className="flex items-center justify-between">
+        <Card className="glass-card rounded-[2.5rem] overflow-hidden border-primary/20 bg-primary/5 shadow-2xl shadow-primary/10">
+          <CardContent className="p-0">
+            {/* Mockup Header */}
+            <div className="p-8 pb-4 flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
-                  <Ghost className="h-7 w-7 text-primary" />
+                <div className="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center border border-primary/30 shadow-lg shadow-primary/20">
+                  <Ghost className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-headline font-bold text-white tracking-tight">
-                    {selectedFeedback.isAnonymous ? 'Anonymous Inquiry' : `From ${selectedFeedback.username}`}
+                  <h2 className="text-xl font-headline font-bold text-white tracking-tight">
+                    {selectedFeedback.isAnonymous ? 'Anonymous Whisper' : `Whisper by ${selectedFeedback.username}`}
                   </h2>
-                  <div className="flex items-center gap-2 text-muted-foreground/40 text-xs font-bold uppercase tracking-wider">
+                  <div className="flex items-center gap-2 text-muted-foreground/40 text-[10px] font-bold uppercase tracking-[0.2em]">
                     <Clock className="h-3 w-3" />
                     {formatDistanceToNow(selectedFeedback.createdAt)} ago
                   </div>
                 </div>
               </div>
               <Button 
-                variant="outline" 
+                variant="ghost" 
                 size="icon" 
                 onClick={() => setSelectedFeedback(null)}
-                className="rounded-full border-white/10 hover:bg-white/5"
+                className="rounded-full text-muted-foreground hover:text-white hover:bg-white/5"
               >
-                <X className="h-4 w-4" />
+                <X className="h-5 w-5" />
               </Button>
             </div>
 
-            <div className="bg-black/40 border border-white/5 rounded-3xl p-8 space-y-6">
-              <p className="text-xl text-foreground/90 leading-relaxed italic">
-                "{selectedFeedback.message}"
-              </p>
-              
-              {selectedFeedback.imageUrl && (
-                <div className="rounded-2xl overflow-hidden border border-white/10 bg-black/20">
+            {/* Mockup Content Area */}
+            <div className="px-8 pb-8 space-y-6">
+              <div className="relative group rounded-[2rem] overflow-hidden border border-white/10 bg-black/40 shadow-inner">
+                {/* Image Mockup */}
+                <div className="aspect-[4/3] w-full bg-muted/20 relative overflow-hidden">
                   <img 
-                    src={selectedFeedback.imageUrl} 
-                    alt="Attachment" 
-                    className="w-full h-auto max-h-[500px] object-contain" 
+                    src={selectedFeedback.imageUrl || "https://picsum.photos/seed/lons/800/600"} 
+                    alt="Mockup Visual" 
+                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
+                    data-ai-hint="abstract dark"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                  
+                  {/* Message Overlay Style */}
+                  <div className="absolute bottom-0 left-0 right-0 p-8">
+                    <p className="text-2xl font-headline font-medium text-white leading-tight italic drop-shadow-lg">
+                      "{selectedFeedback.message}"
+                    </p>
+                  </div>
                 </div>
-              )}
-            </div>
+              </div>
 
-            <div className="flex justify-center pt-4">
-              <Button 
-                onClick={() => handleShareToX(selectedFeedback)}
-                className="rounded-full bg-white text-black hover:bg-white/90 font-bold h-14 px-10 text-lg gap-3 shadow-xl shadow-white/5"
-              >
-                <svg width="20" height="20" viewBox="0 0 1200 1227" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" />
-                </svg>
-                Share to X
-              </Button>
+              {/* Action Area */}
+              <div className="flex flex-col gap-4">
+                <Button 
+                  onClick={() => handleShareToX(selectedFeedback)}
+                  className="w-full rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-16 text-xl gap-3 shadow-xl transition-all active:scale-[0.98]"
+                >
+                  <svg width="24" height="24" viewBox="0 0 1200 1227" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" />
+                  </svg>
+                  Share to X
+                </Button>
+                <p className="text-center text-muted-foreground/40 text-[10px] font-bold uppercase tracking-widest">
+                  Securely vaulted and ready for the world
+                </p>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -120,7 +132,7 @@ export function AdminFeedbackList() {
             onClick={() => setSelectedFeedback(item)}
             className="group relative flex items-center gap-6 p-6 rounded-[2rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.05] hover:border-white/10 transition-all duration-300 cursor-pointer"
           >
-            <div className="flex-shrink-0 w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:scale-105 transition-transform">
+            <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:scale-105 group-hover:bg-primary/20 transition-all">
               <Ghost className="h-8 w-8 text-primary/80" />
             </div>
 
@@ -135,13 +147,13 @@ export function AdminFeedbackList() {
 
             <div className="flex items-center gap-8">
               <div className="hidden sm:flex flex-col items-end gap-1">
-                <div className="flex items-center gap-2 text-muted-foreground/40 text-xs font-bold uppercase tracking-wider">
+                <div className="flex items-center gap-2 text-muted-foreground/40 text-[10px] font-bold uppercase tracking-wider">
                   <Clock className="h-3 w-3" />
                   {formatDistanceToNow(item.createdAt)} ago
                 </div>
                 {item.imageUrl && (
-                  <Badge variant="secondary" className="bg-primary/20 text-primary hover:bg-primary/30 border-primary/20 rounded-full px-3 py-0.5 text-[10px] font-bold">
-                    Attachment
+                  <Badge variant="secondary" className="bg-primary/20 text-primary hover:bg-primary/30 border-primary/20 rounded-full px-3 py-0.5 text-[9px] font-bold tracking-tighter">
+                    ATTACHMENT
                   </Badge>
                 )}
               </div>

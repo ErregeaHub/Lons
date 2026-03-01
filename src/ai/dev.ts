@@ -1,4 +1,2 @@
-import { config } from 'dotenv';
-config();
 
-import '@/ai/flows/admin-feedback-summarization-categorization.ts';
+// AI stack removed per user request.
