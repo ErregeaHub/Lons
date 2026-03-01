@@ -93,34 +93,36 @@ export function PostForm() {
             <div className="space-y-2">
               <h2 className="text-3xl font-headline font-bold text-white tracking-tight">Whisper Vaulted</h2>
               <p className="text-muted-foreground font-medium max-w-sm mx-auto">
-                Your expression is safe. You can now share this visual directly to X.
+                Your expression is safe and ready to be shared.
               </p>
             </div>
           </div>
 
-          {/* High-Fidelity Mockup - Top Placement per sketch */}
-          <div className="relative group rounded-[2.5rem] overflow-hidden border border-white/10 bg-black/60 shadow-2xl mx-auto max-w-md">
-            <div className="aspect-[4/5] w-full bg-muted/10 relative overflow-hidden flex items-center justify-center">
+          {/* High-Fidelity Mockup - Non-overlapping Layout */}
+          <div className="relative group rounded-[2.5rem] overflow-hidden border border-white/10 bg-black shadow-2xl mx-auto max-w-md flex flex-col">
+             {/* Header Branding */}
+             <div className="p-6 flex items-center justify-between border-b border-white/5 bg-white/[0.02]">
+                <div className="flex items-center gap-2">
+                  <Ghost className="h-4 w-4 text-[#E1BDFF]" />
+                  <span className="text-[10px] font-bold text-white/80 uppercase tracking-widest">Lons Anonymous</span>
+                </div>
+                <div className="w-2 h-2 rounded-full bg-[#E1BDFF] animate-pulse" />
+             </div>
+
+            {/* Message Area (Top) */}
+            <div className="p-8 pb-6 bg-gradient-to-b from-white/[0.03] to-transparent text-left">
+              <p className="text-xl md:text-2xl font-headline font-bold text-white leading-relaxed italic">
+                "{submittedData.message}"
+              </p>
+            </div>
+            
+            {/* Image Area (Bottom) */}
+            <div className="w-full bg-muted/10 overflow-hidden">
               <img 
                 src={submittedData.imageUrl || "https://picsum.photos/seed/lons-nature/800/1000"} 
                 alt="Mockup Preview" 
-                className="w-full h-full object-cover opacity-90 transition-opacity duration-700"
+                className="w-full h-auto object-cover opacity-90 transition-opacity duration-700"
               />
-              
-              {/* Message Overlay Style - Top Placement */}
-              <div className="absolute inset-x-0 top-10 flex justify-center z-10">
-                <div className="w-full bg-black/50 backdrop-blur-xl py-5 px-6 border-y border-white/10 shadow-2xl text-center">
-                  <p className="text-lg md:text-xl font-headline font-bold text-white leading-snug drop-shadow-lg italic">
-                    "{submittedData.message}"
-                  </p>
-                </div>
-              </div>
-
-              {/* Branding Overlay */}
-              <div className="absolute top-6 left-6 flex items-center gap-2 px-3 py-1.5 bg-black/40 backdrop-blur-md rounded-full border border-white/10 z-20">
-                <Ghost className="h-3 w-3 text-[#E1BDFF]" />
-                <span className="text-[10px] font-bold text-white/80 uppercase tracking-widest">Lons</span>
-              </div>
             </div>
           </div>
 

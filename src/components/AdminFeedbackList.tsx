@@ -80,32 +80,30 @@ export function AdminFeedbackList() {
               </Button>
             </div>
 
-            {/* High-Fidelity Mockup Area */}
+            {/* High-Fidelity Mockup Area - Non-overlapping layout */}
             <div className="px-8 pb-8 space-y-8">
-              <div className="relative group rounded-[2.5rem] overflow-hidden border border-white/10 bg-black/60 shadow-2xl transition-transform duration-500">
-                {/* Image Mockup */}
-                <div className="aspect-[4/5] w-full bg-muted/10 relative overflow-hidden flex items-center justify-center">
+              <div className="relative group rounded-[2.5rem] overflow-hidden border border-white/10 bg-black shadow-2xl transition-transform duration-500 flex flex-col">
+                {/* Branding Strip */}
+                <div className="p-4 bg-white/[0.02] border-b border-white/5 flex items-center gap-2">
+                   <Ghost className="h-3 w-3 text-[#E1BDFF]" />
+                   <span className="text-[9px] font-bold text-white/40 uppercase tracking-[0.3em]">Vault Transmission</span>
+                </div>
+
+                {/* Message Block (Top) */}
+                <div className="p-8 pb-6 bg-gradient-to-b from-white/[0.04] to-transparent">
+                  <p className="text-xl md:text-2xl font-headline font-bold text-white leading-relaxed italic">
+                    "{selectedFeedback.message}"
+                  </p>
+                </div>
+
+                {/* Image Block (Bottom) */}
+                <div className="w-full bg-muted/5 relative overflow-hidden">
                   <img 
                     src={selectedFeedback.imageUrl || "https://picsum.photos/seed/lons-nature/800/1000"} 
                     alt="Mockup Visual" 
-                    className="w-full h-full object-cover opacity-90 transition-opacity duration-700"
+                    className="w-full h-auto object-cover opacity-90 transition-opacity duration-700"
                     data-ai-hint="atmospheric landscape"
                   />
-                  
-                  {/* Message Overlay Style - Top Placement per sketch */}
-                  <div className="absolute inset-x-0 top-12 flex justify-center z-10">
-                    <div className="w-full bg-black/50 backdrop-blur-xl py-6 px-8 border-y border-white/10 shadow-2xl text-center">
-                      <p className="text-xl md:text-2xl font-headline font-bold text-white leading-snug drop-shadow-lg italic">
-                        "{selectedFeedback.message}"
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Branding Overlay */}
-                  <div className="absolute top-6 left-6 flex items-center gap-2 px-3 py-1.5 bg-black/40 backdrop-blur-md rounded-full border border-white/10 z-20">
-                    <Ghost className="h-3 w-3 text-[#E1BDFF]" />
-                    <span className="text-[10px] font-bold text-white/80 uppercase tracking-widest">Lons</span>
-                  </div>
                 </div>
               </div>
 
@@ -119,7 +117,7 @@ export function AdminFeedbackList() {
                   Share to X
                 </Button>
                 <p className="text-center text-muted-foreground/30 text-[9px] font-bold uppercase tracking-[0.3em]">
-                  Secure Transmission • Metadata Stripped • Ready for X
+                  Metadata Stripped • Secured Transmission • Ready for X
                 </p>
               </div>
             </div>
