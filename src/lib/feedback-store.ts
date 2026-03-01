@@ -5,7 +5,6 @@ let feedbackItems: Feedback[] = [
     id: '1',
     message: 'Sometimes the silence is louder than the noise.',
     isAnonymous: true,
-    // imageUrl removed for text-only layout
     createdAt: new Date(Date.now() - 1000 * 60 * 12),
   },
   {
