@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Image as ImageIcon, SendHorizontal, X, CheckCircle2, RotateCcw, Twitter } from 'lucide-react';
+import { Image as ImageIcon, SendHorizontal, X, CheckCircle2, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -20,7 +20,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { submitFeedbackAction } from '@/lib/feedback-actions';
 import { Label } from '@/components/ui/label';
 import { Feedback } from '@/lib/types';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
 const formSchema = z.object({
@@ -33,7 +32,7 @@ const formSchema = z.object({
 export function PostForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [submittedData, setSubmittedData] = useState<Feedback | null>(null);
+  const [submitted, setSubmitted] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -51,8 +50,8 @@ export function PostForm() {
     setIsSubmitting(true);
     try {
       const result = await submitFeedbackAction(values);
-      if (result.success && result.item) {
-        setSubmittedData(result.item);
+      if (result.success) {
+        setSubmitted(true);
       }
     } catch (error) {
       console.error(error);
@@ -70,92 +69,29 @@ export function PostForm() {
     }
   };
 
-  const handleShareToX = () => {
-    if (!submittedData) return;
-    const message = `"${submittedData.message}"\n\n- Expressed anonymously via Lons 👻`;
-    const shareUrl = submittedData.imageUrl || window.location.origin;
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}&url=${encodeURIComponent(shareUrl)}`;
-    window.open(twitterUrl, '_blank');
-  };
-
   const resetForm = () => {
-    setSubmittedData(null);
+    setSubmitted(false);
     setImagePreview(null);
     form.reset();
   };
 
-  if (submittedData) {
+  if (submitted) {
     return (
-      <div className="space-y-12 animate-in fade-in zoom-in duration-500">
-        <div className="text-center space-y-4">
-          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto border border-primary/20 mb-6 shadow-[0_0_30px_rgba(139,92,246,0.1)]">
-            <CheckCircle2 className="h-8 w-8 text-primary" />
+      <div className="space-y-12 animate-in fade-in zoom-in duration-500 py-20">
+        <div className="text-center space-y-8">
+          <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto border border-primary/20 mb-8 shadow-[0_0_50px_rgba(139,92,246,0.15)]">
+            <CheckCircle2 className="h-10 w-10 text-primary" />
           </div>
-          <h2 className="text-4xl font-headline font-bold text-white tracking-tight">Whisper Vaulted</h2>
-          <p className="text-muted-foreground text-base font-medium opacity-60">Transmission encrypted and stored securely.</p>
-        </div>
-
-        {/* HIGH-FIDELITY WHISPER CARD */}
-        <div className="flex flex-col items-center gap-10">
-          <div className={cn(
-            "relative w-full max-w-[600px] bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] hover:border-primary/30 transition-all duration-300 cursor-pointer rounded-xl overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,1)] flex flex-col group",
-            submittedData.imageUrl ? "min-h-[50vh]" : "min-h-[30vh]"
-          )}>
-            
-            {/* 1. MESSAGE BLOCK */}
-            <div className={cn(
-              "p-10 bg-gradient-to-b from-primary/10 to-transparent flex flex-col",
-              !submittedData.imageUrl && "flex-1 justify-center items-center text-center"
-            )}>
-              <div className="space-y-6 w-full">
-                <div className={cn("w-12 h-1 bg-primary/40 rounded-full", !submittedData.imageUrl && "mx-auto")} />
-                <p className={cn(
-                  "font-headline font-bold text-white leading-tight tracking-tight italic",
-                  submittedData.imageUrl ? "text-2xl md:text-3xl" : "text-3xl md:text-4xl"
-                )}>
-                  "{submittedData.message}"
-                </p>
-                <div className={cn("flex items-center gap-2 pt-2", !submittedData.imageUrl && "justify-center")}>
-                   <Badge variant="outline" className="border-primary/20 bg-primary/10 text-[10px] font-bold text-primary/80 rounded-md px-3 py-1 uppercase tracking-widest">
-                    {submittedData.isAnonymous ? 'ANONYMOUS' : submittedData.username?.toUpperCase()}
-                  </Badge>
-                </div>
-              </div>
-            </div>
-
-            {/* 2. MEDIA BLOCK - Only show if image exists */}
-            {submittedData.imageUrl && (
-              <div className="px-8 pb-8 flex-1">
-                <div className="relative rounded-xl overflow-hidden aspect-[4/3] border border-white/[0.05] bg-black shadow-2xl h-full">
-                  <img 
-                    src={submittedData.imageUrl} 
-                    alt="Vault Asset" 
-                    className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-1000"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  
-                  {/* Image Overlay Username - Bottom Right */}
-                  <div className="absolute bottom-6 right-6">
-                    <div className="text-xs md:text-sm font-mono text-white/50 tracking-tighter font-bold drop-shadow-lg">@4ku_rajaa</div>
-                  </div>
-                </div>
-              </div>
-            )}
+          <div className="space-y-3">
+            <h2 className="text-4xl md:text-5xl font-headline font-bold text-white tracking-tight">Whisper Vaulted</h2>
+            <p className="text-muted-foreground text-lg font-medium opacity-60">Transmission encrypted and stored securely.</p>
           </div>
-
-          <div className="w-full max-w-[600px] space-y-6">
+          
+          <div className="pt-12">
             <Button 
-              onClick={handleShareToX}
-              className="w-full rounded-xl bg-white text-black hover:bg-white/90 font-bold h-16 text-lg gap-4 transition-all active:scale-[0.98] shadow-2xl"
-            >
-              <Twitter className="h-6 w-6 fill-current" />
-              Share to X
-            </Button>
-
-            <Button 
-              variant="ghost"
+              variant="outline"
               onClick={resetForm}
-              className="w-full rounded-xl text-muted-foreground/60 hover:text-white transition-all gap-3 h-12"
+              className="rounded-full border-white/10 text-muted-foreground hover:text-white transition-all gap-3 h-14 px-10 hover:bg-white/5 font-bold"
             >
               <RotateCcw className="h-5 w-5" />
               Reset & Send Another
