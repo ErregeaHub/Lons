@@ -93,14 +93,14 @@ export function AdminFeedbackList() {
                    <div className="w-1.5 h-1.5 rounded-full bg-[#E1BDFF]/40" />
                 </div>
 
-                {/* 2. Message Block (Text) */}
+                {/* 2. Message Block (Text) - SEPARATED */}
                 <div className="p-7 bg-[#141414] border-b border-white/5">
                   <p className="text-base font-headline font-bold text-white leading-tight italic">
                     "{selectedFeedback.message}"
                   </p>
                 </div>
 
-                {/* 3. Image Block */}
+                {/* 3. Image Block - SEPARATED */}
                 <div className="w-full bg-black relative overflow-hidden aspect-[4/3]">
                   <img 
                     src={selectedFeedback.imageUrl || "https://picsum.photos/seed/lons-nature/800/1000"} 

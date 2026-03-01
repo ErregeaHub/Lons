@@ -98,7 +98,7 @@ export function PostForm() {
             </div>
           </div>
 
-          {/* Compact Screenshot-Friendly Mockup */}
+          {/* Compact Screenshot-Friendly Mockup - Vertical Separation */}
           <div className="relative rounded-[2rem] overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-2xl mx-auto max-w-[320px] flex flex-col">
              
              {/* 1. Header Branding */}
@@ -110,14 +110,14 @@ export function PostForm() {
                 <div className="w-1.5 h-1.5 rounded-full bg-[#E1BDFF]/60 animate-pulse" />
              </div>
 
-            {/* 2. Message Area (Text) */}
+            {/* 2. Message Area (Text) - SEPARATED */}
             <div className="p-7 bg-[#141414] border-b border-white/5 text-left">
               <p className="text-base font-headline font-bold text-white leading-tight italic">
                 "{submittedData.message}"
               </p>
             </div>
             
-            {/* 3. Image Area */}
+            {/* 3. Image Area - SEPARATED */}
             <div className="w-full bg-black overflow-hidden aspect-[4/3] relative">
               <img 
                 src={submittedData.imageUrl || "https://picsum.photos/seed/lons-nature/800/1000"} 
