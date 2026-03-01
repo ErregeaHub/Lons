@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Feedback } from '@/lib/types';
 import { getAllFeedbackAction } from '@/lib/feedback-actions';
-import { Ghost, Clock, ChevronRight, X, ArrowLeft, Twitter } from 'lucide-react';
+import { Ghost, Clock, ChevronRight, X, ArrowLeft, Twitter, ShieldCheck } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -92,14 +92,14 @@ export function AdminFeedbackList() {
                    <div className="w-1 h-1 rounded-full bg-[#E1BDFF]/40" />
                 </div>
 
-                {/* Message Block (Separated from image) */}
-                <div className="p-5 bg-[#141414] border-b border-white/5">
+                {/* Message Block (Top half of the card content) */}
+                <div className="p-6 bg-[#141414] border-b border-white/5">
                   <p className="text-base font-headline font-bold text-white leading-tight italic">
                     "{selectedFeedback.message}"
                   </p>
                 </div>
 
-                {/* Image Block (Bottom) - Compact & Framed */}
+                {/* Image Block (Bottom half of the card content) */}
                 <div className="w-full bg-black relative overflow-hidden h-[240px]">
                   <img 
                     src={selectedFeedback.imageUrl || "https://picsum.photos/seed/lons-nature/800/1000"} 
@@ -108,6 +108,12 @@ export function AdminFeedbackList() {
                     data-ai-hint="atmospheric landscape"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                  
+                  {/* Subtle Overlay Badge */}
+                  <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2 py-1 rounded-md bg-black/40 backdrop-blur-md border border-white/10">
+                    <ShieldCheck className="h-2.5 w-2.5 text-[#E1BDFF]" />
+                    <span className="text-[6px] font-bold text-white uppercase tracking-wider">Secured</span>
+                  </div>
                 </div>
               </div>
 
@@ -121,7 +127,7 @@ export function AdminFeedbackList() {
                   Share to X
                 </Button>
                 <p className="text-center text-muted-foreground/20 text-[7px] font-bold uppercase tracking-[0.3em]">
-                  Metadata Stripped • Secured Transmission
+                  Metadata Stripped • Lons Anonymous
                 </p>
               </div>
             </div>

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Image as ImageIcon, SendHorizontal, X, CheckCircle2, RotateCcw, Twitter, Ghost } from 'lucide-react';
+import { Image as ImageIcon, SendHorizontal, X, CheckCircle2, RotateCcw, Twitter, Ghost, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -93,7 +93,7 @@ export function PostForm() {
             <div className="space-y-0.5">
               <h2 className="text-xl font-headline font-bold text-white tracking-tight">Whisper Vaulted</h2>
               <p className="text-muted-foreground text-[11px] font-medium max-w-xs mx-auto">
-                Ready to be shared with the world.
+                Your message is now part of the vault.
               </p>
             </div>
           </div>
@@ -109,20 +109,26 @@ export function PostForm() {
                 <div className="w-1 h-1 rounded-full bg-[#E1BDFF]/60 animate-pulse" />
              </div>
 
-            {/* Message Area (Top - Separated) */}
-            <div className="p-5 bg-[#141414] border-b border-white/5 text-left">
+            {/* Message Area (Top) */}
+            <div className="p-6 bg-[#141414] border-b border-white/5 text-left">
               <p className="text-base font-headline font-bold text-white leading-tight italic">
                 "{submittedData.message}"
               </p>
             </div>
             
-            {/* Image Area (Bottom - Controlled Height) */}
-            <div className="w-full bg-black overflow-hidden h-[240px]">
+            {/* Image Area (Bottom) */}
+            <div className="w-full bg-black overflow-hidden h-[240px] relative">
               <img 
                 src={submittedData.imageUrl || "https://picsum.photos/seed/lons-nature/800/1000"} 
                 alt="Mockup Preview" 
                 className="w-full h-full object-cover opacity-80"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+              
+              <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2 py-1 rounded-md bg-black/40 backdrop-blur-md border border-white/10">
+                <ShieldCheck className="h-2.5 w-2.5 text-[#E1BDFF]" />
+                <span className="text-[6px] font-bold text-white uppercase tracking-wider">Secured</span>
+              </div>
             </div>
           </div>
 
