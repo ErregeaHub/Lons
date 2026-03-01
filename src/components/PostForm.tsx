@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Image as ImageIcon, SendHorizontal, X, CheckCircle2, RotateCcw, Twitter, Ghost, ShieldCheck } from 'lucide-react';
+import { Image as ImageIcon, SendHorizontal, X, CheckCircle2, RotateCcw, Twitter, Ghost, ShieldCheck, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -20,6 +20,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { submitFeedbackAction } from '@/lib/feedback-actions';
 import { Label } from '@/components/ui/label';
 import { Feedback } from '@/lib/types';
+import { Badge } from '@/components/ui/badge';
 
 const formSchema = z.object({
   message: z.string().min(3, { message: "What's on your mind?" }),
@@ -84,67 +85,82 @@ export function PostForm() {
 
   if (submittedData) {
     return (
-      <Card className="glass-card rounded-[2.5rem] overflow-hidden border-white/10 bg-[#1e1a22] animate-in fade-in zoom-in duration-500 shadow-2xl">
-        <CardContent className="p-8 text-center space-y-8">
-          <div className="flex flex-col items-center gap-3">
-            <div className="w-14 h-14 bg-[#E1BDFF]/20 rounded-full flex items-center justify-center border border-[#E1BDFF]/30 shadow-inner">
-              <CheckCircle2 className="h-7 w-7 text-[#E1BDFF]" />
-            </div>
-            <div className="space-y-0.5">
-              <h2 className="text-xl font-headline font-bold text-white tracking-tight">Whisper Vaulted</h2>
-              <p className="text-muted-foreground text-[11px] font-medium max-w-xs mx-auto">
-                Your message is now part of the vault.
-              </p>
-            </div>
+      <div className="space-y-8 animate-in fade-in zoom-in duration-500">
+        <div className="text-center space-y-2">
+          <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mx-auto border border-primary/30 mb-4">
+            <CheckCircle2 className="h-6 w-6 text-primary" />
           </div>
+          <h2 className="text-2xl font-headline font-bold text-white tracking-tight">Whisper Vaulted</h2>
+          <p className="text-muted-foreground text-sm font-medium">Your transmission has been secured.</p>
+        </div>
 
-          {/* Compact Screenshot-Friendly Mockup - Vertical Separation */}
-          <div className="relative rounded-[2rem] overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-2xl mx-auto max-w-[320px] flex flex-col">
-             
-             {/* 1. Header Branding */}
-             <div className="px-5 py-3 flex items-center justify-between border-b border-white/5 bg-white/[0.02]">
-                <div className="flex items-center gap-2">
-                  <Ghost className="h-3 w-3 text-[#E1BDFF]" />
-                  <span className="text-[8px] font-bold text-white/50 uppercase tracking-[0.3em]">Lons Vault</span>
-                </div>
-                <div className="w-1.5 h-1.5 rounded-full bg-[#E1BDFF]/60 animate-pulse" />
-             </div>
-
-            {/* 2. Message Area (Text) - SEPARATED */}
-            <div className="p-7 bg-[#141414] border-b border-white/5 text-left">
-              <p className="text-base font-headline font-bold text-white leading-tight italic">
-                "{submittedData.message}"
-              </p>
-            </div>
+        {/* THE VAULT TRANSMISSION CARD */}
+        <div className="flex flex-col items-center">
+          <div className="relative w-full max-w-[360px] bg-[#050505] border border-white/10 rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] flex flex-col">
             
-            {/* 3. Image Area - SEPARATED */}
-            <div className="w-full bg-black overflow-hidden aspect-[4/3] relative">
-              <img 
-                src={submittedData.imageUrl || "https://picsum.photos/seed/lons-nature/800/1000"} 
-                alt="Mockup Preview" 
-                className="w-full h-full object-cover opacity-90"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-              
-              <div className="absolute bottom-4 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-black/40 backdrop-blur-md border border-white/10">
-                <ShieldCheck className="h-3 w-3 text-[#E1BDFF]" />
-                <span className="text-[7px] font-bold text-white uppercase tracking-wider">Secured</span>
+            {/* 1. VAULT HEADER */}
+            <div className="px-6 py-4 flex items-center justify-between border-b border-white/5 bg-white/[0.02]">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                <span className="text-[9px] font-mono font-bold text-white/40 uppercase tracking-[0.3em]">Lons // Vault_ID: {submittedData.id.toUpperCase()}</span>
+              </div>
+              <Ghost className="h-3 w-3 text-primary/40" />
+            </div>
+
+            {/* 2. MESSAGE BLOCK */}
+            <div className="p-8 pb-6">
+              <div className="space-y-4">
+                <div className="w-8 h-1 bg-primary/20 rounded-full" />
+                <p className="text-xl md:text-2xl font-headline font-bold text-white leading-[1.15] tracking-tight italic">
+                  "{submittedData.message}"
+                </p>
+                <div className="flex items-center gap-2">
+                   <Badge variant="outline" className="border-white/5 bg-white/5 text-[8px] font-bold text-white/30 rounded-sm px-1.5 py-0 h-4 uppercase tracking-tighter">
+                    Transmission: {submittedData.isAnonymous ? 'PRIVATE_MODE' : submittedData.username}
+                  </Badge>
+                </div>
               </div>
             </div>
 
-            {/* 4. Integrated Share Action */}
-            <div className="p-4 bg-[#0d0d0d]">
+            {/* 3. MEDIA BLOCK */}
+            <div className="px-6 pb-6">
+              <div className="relative rounded-2xl overflow-hidden aspect-[4/5] border border-white/10 bg-black shadow-inner">
+                <img 
+                  src={submittedData.imageUrl || "https://picsum.photos/seed/vault/800/1000"} 
+                  alt="Mockup Visual" 
+                  className="w-full h-full object-cover opacity-90"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-xl border border-white/10">
+                    <ShieldCheck className="h-3 w-3 text-primary" />
+                    <span className="text-[8px] font-bold text-white uppercase tracking-wider">Asset Secured</span>
+                  </div>
+                  <div className="text-[8px] font-mono text-white/40">AUTH_PASS</div>
+                </div>
+              </div>
+            </div>
+
+            {/* 4. FOOTER & ACTION */}
+            <div className="p-6 pt-2 bg-white/[0.02] border-t border-white/5 mt-auto">
               <Button 
                 onClick={handleShareToX}
-                className="w-full rounded-xl bg-white text-black hover:bg-white/90 font-bold h-11 text-sm gap-3 transition-all active:scale-[0.98]"
+                className="w-full rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-12 text-sm gap-3 transition-all active:scale-[0.98] shadow-xl"
               >
                 <Twitter className="h-4 w-4 fill-current" />
                 Share to X
               </Button>
+              
+              <div className="mt-4 flex items-center justify-center gap-4 opacity-20">
+                <div className="h-px flex-1 bg-white/20" />
+                <Zap className="h-3 w-3 text-white" />
+                <div className="h-px flex-1 bg-white/20" />
+              </div>
             </div>
           </div>
 
-          <div className="flex justify-center">
+          <div className="mt-10 flex gap-4">
             <Button 
               variant="outline"
               onClick={resetForm}
@@ -154,8 +170,8 @@ export function PostForm() {
               Send Another
             </Button>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     );
   }
 
@@ -177,7 +193,7 @@ export function PostForm() {
                   id="anonymous-mode"
                   checked={isAnonymous}
                   onCheckedChange={(checked) => form.setValue('isAnonymous', checked)}
-                  className="data-[state=checked]:bg-[#E1BDFF]"
+                  className="data-[state=checked]:bg-primary"
                 />
               </div>
             </div>
@@ -191,7 +207,7 @@ export function PostForm() {
                     <FormControl>
                       <Textarea 
                         placeholder="What's on your mind? Be bold, be anonymous..." 
-                        className="min-h-[200px] bg-black/30 border-white/5 rounded-[1.5rem] text-lg focus-visible:ring-[#E1BDFF]/20 placeholder:text-muted-foreground/20 resize-none p-8 font-medium leading-relaxed"
+                        className="min-h-[200px] bg-black/30 border-white/5 rounded-[1.5rem] text-lg focus-visible:ring-primary/20 placeholder:text-muted-foreground/20 resize-none p-8 font-medium leading-relaxed"
                         {...field} 
                       />
                     </FormControl>
@@ -208,7 +224,7 @@ export function PostForm() {
                     <FormItem className="animate-in fade-in slide-in-from-top-2 duration-300">
                       <Input 
                         placeholder="Your name or handle" 
-                        className="bg-black/20 border-white/5 rounded-xl h-12 text-base px-5 focus-visible:ring-[#E1BDFF]/20" 
+                        className="bg-black/20 border-white/5 rounded-xl h-12 text-base px-5 focus-visible:ring-primary/20" 
                         {...field} 
                       />
                     </FormItem>
@@ -249,7 +265,7 @@ export function PostForm() {
                   variant="ghost" 
                   size="icon" 
                   type="button" 
-                  className="h-14 w-14 rounded-2xl text-muted-foreground/40 hover:text-[#E1BDFF] hover:bg-[#E1BDFF]/10 transition-all active:scale-90"
+                  className="h-14 w-14 rounded-2xl text-muted-foreground/40 hover:text-primary hover:bg-primary/10 transition-all active:scale-90"
                 >
                   <ImageIcon className="h-7 w-7" />
                 </Button>
@@ -257,7 +273,7 @@ export function PostForm() {
 
               <Button 
                 type="submit" 
-                className="rounded-2xl bg-[#E1BDFF] text-black hover:bg-[#E1BDFF]/90 px-10 py-7 font-bold flex items-center gap-4 transition-all hover:translate-x-1 shadow-xl shadow-[#E1BDFF]/20 active:scale-[0.98]"
+                className="rounded-2xl bg-primary text-black hover:bg-primary/90 px-10 py-7 font-bold flex items-center gap-4 transition-all hover:translate-x-1 shadow-xl shadow-primary/20 active:scale-[0.98]"
                 disabled={isSubmitting}
               >
                 <span className="text-lg">{isSubmitting ? 'Vaulting...' : 'Send Whisper'}</span>

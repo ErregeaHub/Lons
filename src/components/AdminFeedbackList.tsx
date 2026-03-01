@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Feedback } from '@/lib/types';
 import { getAllFeedbackAction } from '@/lib/feedback-actions';
-import { Ghost, Clock, ChevronRight, X, ArrowLeft, Twitter, ShieldCheck } from 'lucide-react';
+import { Ghost, Clock, ChevronRight, X, ArrowLeft, Twitter, ShieldCheck, Zap } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -46,95 +46,85 @@ export function AdminFeedbackList() {
         <Button 
           variant="ghost" 
           onClick={() => setSelectedFeedback(null)}
-          className="mb-6 text-muted-foreground hover:text-white transition-colors gap-2"
+          className="mb-8 text-muted-foreground hover:text-white transition-colors gap-2"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Conversations
+          Back to Admin Console
         </Button>
 
-        <Card className="glass-card rounded-[2.5rem] overflow-hidden border-white/10 bg-[#1e1a22] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-          <CardContent className="p-0">
-            {/* Header */}
-            <div className="p-8 pb-4 flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-[#2c2630] flex items-center justify-center border border-white/5">
-                  <Ghost className="h-6 w-6 text-[#E1BDFF]" />
-                </div>
-                <div>
-                  <h2 className="text-xl font-headline font-bold text-white tracking-tight">
-                    {selectedFeedback.isAnonymous ? 'Anonymous Whisper' : `Whisper by ${selectedFeedback.username}`}
-                  </h2>
-                  <div className="flex items-center gap-2 text-muted-foreground/40 text-[10px] font-bold uppercase tracking-[0.2em]">
-                    <Clock className="h-3 w-3" />
-                    {formatDistanceToNow(selectedFeedback.createdAt)} ago
-                  </div>
-                </div>
+        <div className="flex flex-col items-center">
+          {/* THE VAULT TRANSMISSION CARD */}
+          <div className="relative w-full max-w-[360px] bg-[#050505] border border-white/10 rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] flex flex-col">
+            
+            {/* 1. VAULT HEADER */}
+            <div className="px-6 py-4 flex items-center justify-between border-b border-white/5 bg-white/[0.02]">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                <span className="text-[9px] font-mono font-bold text-white/40 uppercase tracking-[0.3em]">Vault // TRNSMSN_9921</span>
               </div>
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={() => setSelectedFeedback(null)}
-                className="rounded-full text-muted-foreground hover:text-white hover:bg-white/5"
-              >
-                <X className="h-5 w-5" />
-              </Button>
+              <Ghost className="h-3 w-3 text-primary/40" />
             </div>
 
-            {/* Compact High-Fidelity Mockup Area */}
-            <div className="px-8 pb-8 flex flex-col items-center">
-              <div className="relative rounded-[2rem] overflow-hidden border border-white/10 bg-[#0d0d0d] shadow-2xl flex flex-col w-full max-w-[320px]">
-                
-                {/* 1. Header Branding */}
-                <div className="px-5 py-3 bg-white/[0.03] border-b border-white/5 flex items-center justify-between">
-                   <div className="flex items-center gap-2">
-                    <Ghost className="h-3 w-3 text-[#E1BDFF]" />
-                    <span className="text-[8px] font-bold text-white/40 uppercase tracking-[0.3em]">Vault Transmission</span>
-                   </div>
-                   <div className="w-1.5 h-1.5 rounded-full bg-[#E1BDFF]/40" />
+            {/* 2. MESSAGE BLOCK - Standalone typographic section */}
+            <div className="p-8 pb-6 bg-gradient-to-b from-transparent to-white/[0.01]">
+              <div className="space-y-4">
+                <div className="w-8 h-1 bg-primary/20 rounded-full" />
+                <p className="text-xl md:text-2xl font-headline font-bold text-white leading-[1.15] tracking-tight italic">
+                  "{selectedFeedback.message}"
+                </p>
+                <div className="flex items-center gap-2">
+                   <Badge variant="outline" className="border-white/5 bg-white/5 text-[8px] font-bold text-white/30 rounded-sm px-1.5 py-0 h-4">
+                    ORIGIN: {selectedFeedback.isAnonymous ? 'ANONYMOUS' : selectedFeedback.username?.toUpperCase()}
+                  </Badge>
                 </div>
+              </div>
+            </div>
 
-                {/* 2. Message Block (Text) - SEPARATED */}
-                <div className="p-7 bg-[#141414] border-b border-white/5">
-                  <p className="text-base font-headline font-bold text-white leading-tight italic">
-                    "{selectedFeedback.message}"
-                  </p>
-                </div>
-
-                {/* 3. Image Block - SEPARATED */}
-                <div className="w-full bg-black relative overflow-hidden aspect-[4/3]">
+            {/* 3. MEDIA BLOCK - Strictly separated */}
+            {selectedFeedback.imageUrl && (
+              <div className="px-6 pb-6">
+                <div className="relative rounded-2xl overflow-hidden aspect-[4/5] border border-white/10 shadow-inner group">
                   <img 
-                    src={selectedFeedback.imageUrl || "https://picsum.photos/seed/lons-nature/800/1000"} 
-                    alt="Mockup Visual" 
-                    className="w-full h-full object-cover opacity-90"
-                    data-ai-hint="atmospheric landscape"
+                    src={selectedFeedback.imageUrl} 
+                    alt="Transmission Visual" 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   
-                  {/* Subtle Overlay Badge */}
-                  <div className="absolute bottom-4 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-black/40 backdrop-blur-md border border-white/10">
-                    <ShieldCheck className="h-3 w-3 text-[#E1BDFF]" />
-                    <span className="text-[7px] font-bold text-white uppercase tracking-wider">Secured</span>
+                  {/* Floating Metadata on Image */}
+                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-xl border border-white/10">
+                      <ShieldCheck className="h-3 w-3 text-primary" />
+                      <span className="text-[8px] font-bold text-white uppercase tracking-wider">Encrypted Asset</span>
+                    </div>
+                    <div className="text-[8px] font-mono text-white/40">TS_{Date.now().toString().slice(-4)}</div>
                   </div>
                 </div>
-
-                {/* 4. Integrated Share Action */}
-                <div className="p-4 bg-[#0d0d0d]">
-                  <Button 
-                    onClick={() => handleShareToX(selectedFeedback)}
-                    className="w-full rounded-xl bg-white text-black hover:bg-white/90 font-bold h-11 text-sm gap-3 transition-all active:scale-[0.98]"
-                  >
-                    <Twitter className="h-4 w-4 fill-current" />
-                    Share to X
-                  </Button>
-                </div>
               </div>
+            )}
 
-              <p className="mt-4 text-center text-muted-foreground/20 text-[7px] font-bold uppercase tracking-[0.3em]">
-                Metadata Stripped • Lons Anonymous
-              </p>
+            {/* 4. FOOTER & ACTION */}
+            <div className="p-6 pt-2 bg-white/[0.02] border-t border-white/5 mt-auto">
+              <Button 
+                onClick={() => handleShareToX(selectedFeedback)}
+                className="w-full rounded-2xl bg-white text-black hover:bg-white/90 font-bold h-12 text-sm gap-3 transition-all active:scale-[0.98] shadow-xl"
+              >
+                <Twitter className="h-4 w-4 fill-current" />
+                Share Translation to X
+              </Button>
+              
+              <div className="mt-4 flex items-center justify-center gap-4 opacity-20">
+                <div className="h-px flex-1 bg-white/20" />
+                <Zap className="h-3 w-3 text-white" />
+                <div className="h-px flex-1 bg-white/20" />
+              </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+
+          <p className="mt-6 text-muted-foreground/30 text-[9px] font-mono font-bold uppercase tracking-[0.4em]">
+            Captured via Lons // Invisible Protocol
+          </p>
+        </div>
       </div>
     );
   }
@@ -146,15 +136,15 @@ export function AdminFeedbackList() {
           <div 
             key={item.id} 
             onClick={() => setSelectedFeedback(item)}
-            className="group relative flex items-center gap-6 p-6 rounded-[2rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.06] hover:border-[#E1BDFF]/20 hover:shadow-lg hover:shadow-[#E1BDFF]/5 transition-all duration-300 cursor-pointer"
+            className="group relative flex items-center gap-6 p-6 rounded-[2rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.06] hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 cursor-pointer"
           >
-            <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center border border-white/5 group-hover:scale-105 group-hover:bg-[#E1BDFF]/10 transition-all">
-              <Ghost className="h-8 w-8 text-[#E1BDFF]/60" />
+            <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center border border-white/5 group-hover:scale-105 group-hover:bg-primary/10 transition-all">
+              <Ghost className="h-8 w-8 text-primary/60" />
             </div>
 
             <div className="flex-grow min-w-0 space-y-1">
               <h3 className="text-lg font-bold text-white/90 group-hover:text-white transition-colors">
-                Inquiry #{feedback.length - index}
+                Transmission #{feedback.length - index}
               </h3>
               <p className="text-muted-foreground/50 text-sm font-medium line-clamp-1 italic group-hover:text-muted-foreground/80 transition-colors">
                 "{item.message}"
@@ -168,8 +158,8 @@ export function AdminFeedbackList() {
                   {formatDistanceToNow(item.createdAt)} ago
                 </div>
                 {item.imageUrl && (
-                  <Badge variant="secondary" className="bg-[#E1BDFF]/10 text-[#E1BDFF] hover:bg-[#E1BDFF]/20 border-white/5 rounded-full px-3 py-0.5 text-[9px] font-bold tracking-tighter">
-                    VISUAL ATTACHED
+                  <Badge variant="secondary" className="bg-primary/10 text-primary hover:bg-primary/20 border-white/5 rounded-full px-3 py-0.5 text-[9px] font-bold tracking-tighter">
+                    VISUAL DETECTED
                   </Badge>
                 )}
               </div>
@@ -177,7 +167,7 @@ export function AdminFeedbackList() {
               <Button 
                 variant="outline" 
                 size="icon" 
-                className="h-10 w-10 rounded-full border-white/10 bg-white/5 group-hover:bg-[#E1BDFF] group-hover:border-[#E1BDFF] group-hover:text-black transition-all duration-300"
+                className="h-10 w-10 rounded-full border-white/10 bg-white/5 group-hover:bg-primary group-hover:border-primary group-hover:text-black transition-all duration-300"
               >
                 <ChevronRight className="h-5 w-5" />
               </Button>
