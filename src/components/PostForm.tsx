@@ -1,10 +1,11 @@
+
 'use client';
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Image, SendHorizontal, X } from 'lucide-react';
+import { Image, SendHorizontal, X, CheckCircle2, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -19,6 +20,7 @@ import { Switch } from '@/components/ui/switch';
 import { Card, CardContent } from '@/components/ui/card';
 import { submitFeedbackAction } from '@/lib/feedback-actions';
 import { Label } from '@/components/ui/label';
+import { Feedback } from '@/lib/types';
 
 const formSchema = z.object({
   message: z.string().min(3, { message: "What's on your mind?" }),
@@ -30,6 +32,7 @@ const formSchema = z.object({
 export function PostForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [submittedData, setSubmittedData] = useState<Feedback | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -46,10 +49,10 @@ export function PostForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     try {
-      await submitFeedbackAction(values);
-      form.reset();
-      setImagePreview(null);
-      window.location.reload(); 
+      const result = await submitFeedbackAction(values);
+      if (result.success && result.item) {
+        setSubmittedData(result.item);
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -65,6 +68,66 @@ export function PostForm() {
       form.setValue('imageUrl', url);
     }
   };
+
+  const handleShareToX = () => {
+    if (!submittedData) return;
+    const text = encodeURIComponent(`"${submittedData.message}" - Sent via Lons 👻`);
+    window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+  };
+
+  const resetForm = () => {
+    setSubmittedData(null);
+    setImagePreview(null);
+    form.reset();
+  };
+
+  if (submittedData) {
+    return (
+      <Card className="glass-card rounded-[1.5rem] overflow-hidden border-primary/20 bg-primary/5 animate-in fade-in zoom-in duration-500">
+        <CardContent className="p-10 text-center space-y-8">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center border border-primary/30">
+              <CheckCircle2 className="h-10 w-10 text-primary" />
+            </div>
+            <h2 className="text-3xl font-headline font-bold text-white tracking-tight">Whisper Sent</h2>
+            <p className="text-muted-foreground font-medium max-w-sm">
+              Your message has been securely sent to the vault. Express yourself elsewhere!
+            </p>
+          </div>
+
+          <div className="bg-black/40 border border-white/5 rounded-2xl p-6 text-left space-y-4">
+            <p className="text-foreground/90 font-medium italic">"{submittedData.message}"</p>
+            {submittedData.imageUrl && (
+              <img src={submittedData.imageUrl} alt="Attached" className="max-h-40 rounded-xl border border-white/10" />
+            )}
+            <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-widest">
+              {submittedData.isAnonymous ? 'Anonymous Expression' : `By ${submittedData.username}`}
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 pt-4">
+            <Button 
+              onClick={handleShareToX}
+              className="flex-1 rounded-xl bg-white text-black hover:bg-white/90 font-bold h-14 text-lg gap-3"
+            >
+              <svg width="20" height="20" viewBox="0 0 1200 1227" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" />
+              </svg>
+              Share to X
+            </Button>
+            <Button 
+              variant="outline"
+              onClick={resetForm}
+              className="rounded-xl border-white/10 bg-white/5 hover:bg-white/10 text-white font-bold h-14 px-8"
+            >
+              <RotateCcw className="h-5 w-5 mr-2" />
+              New Whisper
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className="glass-card rounded-[1.5rem] overflow-hidden border-white/5">

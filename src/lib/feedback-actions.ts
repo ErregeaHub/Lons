@@ -19,11 +19,11 @@ export async function submitFeedbackAction(formData: {
     username: formData.username,
     imageUrl: formData.imageUrl,
     createdAt: new Date(),
-    messageCount: Math.floor(Math.random() * 5) // Mocking message count for UI
+    messageCount: 0
   };
 
   await addFeedbackItem(newFeedback);
-  return { success: true };
+  return { success: true, item: newFeedback };
 }
 
 export async function getAllFeedbackAction() {
