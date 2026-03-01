@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Feedback } from '@/lib/types';
-import { Ghost, Clock, ChevronRight, ArrowLeft, Twitter, Trash2 } from 'lucide-react';
+import { Ghost, Clock, ChevronRight, ArrowLeft, Twitter, Trash2, ExternalLink, Download } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
